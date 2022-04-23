@@ -1,8 +1,21 @@
 <script lang="ts">
-    import walletStore from "../store/wallet";
+  import walletStore from "../store/wallet";
 </script>
 
-<button type="button"> PLAY </button>
+<button
+  type="button"
+  on:click={() => {
+    walletStore.init(true);
+  }}
+>
+  {#if $walletStore.loading}
+    LOADING
+  {:else if !$walletStore.connected}
+    CONNECT TO PLAY
+  {:else}
+    PLAY
+  {/if}
+</button>
 
 <style>
   button {

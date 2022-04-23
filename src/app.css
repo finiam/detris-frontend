@@ -11,7 +11,7 @@ body,
   height: 100%;
 }
 body {
-  background: #000;
+  background: #111;
   font-family: var(--pixel-font);
 }
 button,

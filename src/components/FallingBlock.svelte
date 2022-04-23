@@ -5,7 +5,8 @@
   let y = 0;
   let interval;
   let randomVisible = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-  let enterTimeout = Math.floor(Math.random() * (10000 - 1000 + 1000)) + 1000;
+  let enterTimeout = Math.floor(Math.random() * (6000 - 1000 + 1000)) + 1000;
+  let visible = false;
 
   let colors = ["#ff5050", "#158CFA", "#F9F25D", "#D05DF9"];
 
@@ -13,8 +14,7 @@
     let minX = window.innerWidth / 5;
 
     let randX = Math.floor(Math.random() * (minX * 3 - minX + 1)) + minX;
-    let randY =
-      Math.floor(Math.random() * (window.innerHeight / 2 - 10 + 1)) + 10;
+    let randY = 0;
 
     return { randX, randY };
   };
@@ -38,7 +38,8 @@
     initPosition();
 
     setTimeout(() => {
-      setInterval(changePosition, 500);
+      visible = true;
+      setInterval(changePosition, 800);
     }, enterTimeout);
   });
 
@@ -51,6 +52,7 @@
   class="wrapper"
   style:top={`${y}px`}
   style:left={`${x}px`}
+  style:display={visible ? "block" : "none"}
   style={`--rand: ${colors[randomVisible]}`}
 >
   <!-- large square -->
@@ -121,8 +123,8 @@
   .wrapper {
     position: absolute;
     width: 100px;
-    left: -100px;
-    top: -100px;
+    opacity: 0.7;
+    filter: drop-shadow(3px 3px 0 #111);
   }
   svg {
     max-width: 100%;

@@ -1,7 +1,7 @@
 import type { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 
 function createWalletStore() {
   const store = writable({
@@ -14,34 +14,44 @@ function createWalletStore() {
 
   const { subscribe, set, update } = store;
 
-  async function init() {
+  async function init(showPrompt?: boolean) {
     update((store) => ({ ...store, loading: true }));
 
     const web3Provider = await detectEthereumProvider();
     const provider = new providers.Web3Provider(web3Provider);
 
-    await provider.send("eth_requestAccounts", []);
+    if (showPrompt) {
+      await provider.send("eth_requestAccounts", []);
+    }
 
     const signer = provider.getSigner();
     const userAddress = await signer.getAddress();
 
     update((store) => ({
       ...store,
+      provider,
+      connected: true,
       loading: false,
       userAddress,
       signer,
-      provider,
     }));
+  }
+
+  async function checkIfConnected() {
+    if ((window.ethereum as any).selectedAddress) {
+      init(true);
+    }
   }
 
   return {
     subscribe,
     init,
+    checkIfConnected,
   };
 }
 
 const walletStore = createWalletStore();
 
-walletStore.init();
+walletStore.checkIfConnected();
 
 export default walletStore;

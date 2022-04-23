@@ -1,13 +1,14 @@
 <script lang="ts">
   import Button from "./components/Button.svelte";
   import FallingBlock from "./components/FallingBlock.svelte";
+  import Grain from "./components/Grain.svelte";
   import walletStore from "./store/wallet";
 </script>
 
 <main>
   <div class="title-wrap">
-    <h1 class="title title-shadow">ZETRIS</h1>
-    <h1 class="title title-main">ZETRIS</h1>
+    <h1 class="title title-shadow">DETRIS</h1>
+    <h1 class="title title-main">DETRIS</h1>
   </div>
   <p class="subtitle">Playable NFT (no really, the NFT is a game)</p>
 
@@ -16,6 +17,7 @@
   <div class="bg">
     {#each { length: 6 } as _}
       <FallingBlock />
+      <Grain />
     {/each}
   </div>
 </main>
@@ -71,8 +73,7 @@
     color: #fff;
     margin: 40px 0;
   }
-  .bg {
-    opacity: 0.5;
+  .bg {    
     z-index: -1;
     pointer-events: none;
   }
