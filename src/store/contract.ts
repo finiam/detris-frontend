@@ -6,7 +6,7 @@ import { get, writable } from "svelte/store";
 
 const ABI = [
   "function balanceOf(address owner) external view returns (uint256 balance)",
-  /* "function mint(address to, uint256 amount) public virtual", */
+  "function safeMint(address to, uint256 qty) public",
 ];
 
 function buildContractsStore() {
@@ -35,20 +35,33 @@ function buildContractsStore() {
 
     let res = await contract.balanceOf(await signer.getAddress());
 
+    console.log(res);
+    console.log(ethers.utils.formatEther(res))
+    console.log(Number(ethers.utils.formatEther(res)) > 0)
     return Number(ethers.utils.formatEther(res));
   }
 
-  /* async function mint() {
+  async function safeMint() {
     const { contract, signer } = get(contractStore);
 
-    let res = await contract.balanceOf(await signer.getAddress());
+    let res = await contract.safeMint(await signer.getAddress(), 1);
 
-    
-  } */
+    console.log(await res);
+  }
+
+  async function tokenOfOwnerByIndex() {
+    const { contract, signer } = get(contractStore);
+
+    let res = await contract.tokenOfOwnerByIndex(await signer.getAddress(), 0);
+
+    console.log(await res);
+  }
 
   return {
     buildContract,
     balanceOf,
+    safeMint,
+    tokenOfOwnerByIndex,
   };
 }
 

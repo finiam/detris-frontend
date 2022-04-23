@@ -1,15 +1,28 @@
 <script lang="ts">
+  import contractStore from "../store/contract";
   import walletStore from "../store/wallet";
 
-  function handleClick() {
-    if ($walletStore.balance) {
+  async function handleClick() {
+    if(!$walletStore.connected) {
+      walletStore.connect();
+
+      return;
+    } 
+
+    if ($walletStore.balance > 0) {
       // show owned nft
-    } else {//mint
+
+      let req = await contractStore.tokenOfOwnerByIndex();
+
+      console.log(await req)
+    } else {
+      //mint
+      // contractStore.safeMint();
     }
   }
 </script>
 
-<button type="button" on:click={walletStore.connect}>
+<button type="button" on:click={handleClick}>
   {#if !$walletStore.connected}
     CONNECT TO PLAY
   {/if}
