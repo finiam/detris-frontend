@@ -1,7 +1,11 @@
-import type { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import detectEthereumProvider from "@metamask/detect-provider";
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "@walletconnect/qrcode-modal";
+import type { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import { providers } from "ethers";
 import { get, writable } from "svelte/store";
+import metamaskStore from "./metamaskStore";
+import walletConnectStore from "./walletConnectStore";
 
 function createWalletStore() {
   const store = writable({
@@ -14,38 +18,21 @@ function createWalletStore() {
 
   const { subscribe, set, update } = store;
 
-  async function init(showPrompt?: boolean) {
-    update((store) => ({ ...store, loading: true }));
-
-    const web3Provider = await detectEthereumProvider();
-    const provider = new providers.Web3Provider(web3Provider);
-
-    if (showPrompt) {
-      await provider.send("eth_requestAccounts", []);
-    }
-
-    const signer = provider.getSigner();
-    const userAddress = await signer.getAddress();
-
-    update((store) => ({
-      ...store,
-      provider,
-      connected: true,
-      loading: false,
-      userAddress,
-      signer,
-    }));
-  }
-
   async function checkIfConnected() {
-    if ((window.ethereum as any).selectedAddress) {
-      init(true);
+    const metamaskUser = await metamaskStore.setupMetamask();
+
+    if (metamaskUser) {
+      update((store) => ({
+        ...store,
+        ...metamaskUser,
+      }));
     }
+
+    /* const walletConnectUser = await walletConnectStore.connect(); */
   }
 
   return {
     subscribe,
-    init,
     checkIfConnected,
   };
 }

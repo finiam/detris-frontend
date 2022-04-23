@@ -1,4 +1,5 @@
 <script lang="ts">
+  import walletStore from "../store/wallet";
   import Button from "../components/Button.svelte";
   import FallingBlock from "../components/FallingBlock.svelte";
   import Grain from "../components/Grain.svelte";
@@ -9,6 +10,9 @@
     <h1 class="title title-shadow">DETRIS</h1>
     <h1 class="title title-main">DETRIS</h1>
   </div>
+  {#if $walletStore.userAddress}
+    {$walletStore.userAddress}
+  {/if}
   <p class="subtitle">Playable NFT (no really, the NFT is a game)</p>
 
   <Button />
