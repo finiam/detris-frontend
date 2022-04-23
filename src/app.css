@@ -11,6 +11,10 @@ body,
   height: 100%;
 }
 body {
-  background: var(--dark-blue);
+  background: #000;
+  font-family: var(--pixel-font);
+}
+button,
+input {
   font-family: var(--pixel-font);
 }

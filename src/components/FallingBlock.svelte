@@ -5,12 +5,14 @@
   let y = 0;
   let interval;
   let randomVisible = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-  let enterTimeout = Math.floor(Math.random() * (5000 - 1000 + 1000)) + 1000;
+  let enterTimeout = Math.floor(Math.random() * (10000 - 1000 + 1000)) + 1000;
 
   let colors = ["#ff5050", "#158CFA", "#F9F25D", "#D05DF9"];
 
   const randomPos = () => {
-    let randX = Math.floor(Math.random() * (window.innerWidth - 10 + 1)) + 10;
+    let minX = window.innerWidth / 5;
+
+    let randX = Math.floor(Math.random() * (minX * 3 - minX + 1)) + minX;
     let randY =
       Math.floor(Math.random() * (window.innerHeight / 2 - 10 + 1)) + 10;
 
@@ -120,6 +122,7 @@
     position: absolute;
     width: 100px;
     left: -100px;
+    top: -100px;
   }
   svg {
     max-width: 100%;

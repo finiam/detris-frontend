@@ -1,14 +1,17 @@
 <script lang="ts">
+  import Button from "./components/Button.svelte";
   import FallingBlock from "./components/FallingBlock.svelte";
   import walletStore from "./store/wallet";
 </script>
 
 <main>
   <div class="title-wrap">
-    <h1 class="title shadow-title">ZETRIS</h1>
-    <h1 class="title">ZETRIS</h1>
+    <h1 class="title title-shadow">ZETRIS</h1>
+    <h1 class="title title-main">ZETRIS</h1>
   </div>
   <p class="subtitle">Playable NFT (no really, the NFT is a game)</p>
+
+  <Button />
 
   <div class="bg">
     {#each { length: 6 } as _}
@@ -23,7 +26,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    margin: 5% auto 0;
+    height: 75vh;
+    width: 80%;
+    overflow: hidden;
+    background-color: var(--dark-blue);
+    border-radius: 20px 10px 50px 50px;
+    box-shadow: inset 10px 10px 0 -5px #fff, inset -2px -2px 0 3px #fff;
+
+    animation: glow 4s ease infinite alternate-reverse;
   }
   .title-wrap {
     position: relative;
@@ -37,10 +48,11 @@
     color: var(--red);
     z-index: 2;
     letter-spacing: -0.02em;
-
+  }
+  .title-main {
     animation: glow 4s ease infinite alternate-reverse;
   }
-  .shadow-title {
+  .title-shadow {
     position: absolute;
     top: 8px;
     left: 4px;
@@ -61,5 +73,7 @@
   }
   .bg {
     opacity: 0.5;
+    z-index: -1;
+    pointer-events: none;
   }
 </style>
