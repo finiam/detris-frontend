@@ -6,6 +6,7 @@ const ABI = [
   "function balanceOf(address owner) external view returns (uint256 balance)",
   "function safeMint(address to) public",
   "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
+  "function tokenURI(uint256 id) public view virtual returns (string memory)",
 ];
 
 function buildContractsStore() {
@@ -57,11 +58,22 @@ function buildContractsStore() {
     return number.toNumber();
   }
 
+  async function tokenURI(id: number) {
+    const { contract, signerAddress } = get(contractStore);
+
+    let tx = await contract.tokenURI(id);
+
+    console.log(tx);
+
+    return tx;
+  }
+
   return {
     buildContract,
     balanceOf,
     safeMint,
     tokenOfOwnerByIndex,
+    tokenURI,
   };
 }
 

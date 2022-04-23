@@ -6,7 +6,7 @@
   async function handleClick() {
     if ($walletStore.balance > 0) {
       // show owned nft
-      gameStore.setTokenId();
+      gameStore.getAddressData();
     } else {
       //mint
       contractStore.safeMint();

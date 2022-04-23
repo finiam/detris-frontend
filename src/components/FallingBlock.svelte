@@ -7,7 +7,7 @@
   let y = 0;
   let interval;
   let randomVisible = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-  let enterTimeout = index * 400;
+  let enterTimeout = index * 600;
   let visible = false;
 
   let colors = ["#ff5050", "#158CFA", "#F9F25D", "#D05DF9", "#5DF9DD", "#fff"];
@@ -19,7 +19,7 @@
   };
 
   function initPosition() {
-    y = 0;
+    y = 100;
     x = randomPosX();
   }
 

@@ -62,7 +62,7 @@
     letter-spacing: -0.02em;
   }
   .title-main {
-    animation: glow 4s ease infinite alternate-reverse;
+    animation: glow 2s ease infinite alternate-reverse;
   }
   .title-shadow {
     position: absolute;
@@ -77,7 +77,7 @@
   }
   @keyframes glow {
     0% {
-      filter: drop-shadow(5px 5px 20px #ffffff44);
+      filter: drop-shadow(5px 5px 20px #ffffffcc);
     }
     100% {
       filter: drop-shadow(10px 10px 15px #ffffff44);

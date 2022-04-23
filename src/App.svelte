@@ -6,10 +6,8 @@
   import walletStore from "./store/wallet";
 </script>
 
-<div>
-  {#if $gameStore.tokenId}
-    <GameScreen />
-  {:else}
-    <HomeScreen />
-  {/if}
-</div>
+{#if $gameStore.tokenId}
+  <GameScreen />
+{:else}
+  <HomeScreen />
+{/if}
