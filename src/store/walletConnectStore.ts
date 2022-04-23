@@ -1,30 +1,30 @@
-import detectEthereumProvider from "@metamask/detect-provider";
 import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
+import QRCode from "@walletconnect/qrcode-modal";
 import { providers, Signer } from "ethers";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 function createWalletConnectStore() {
   async function connect() {
-    // Create a connector
-    const connector = new WalletConnect({
-      bridge: "https://bridge.walletconnect.org", // Required
-      qrcodeModal: QRCodeModal,
+    //  Create WalletConnect Provider
+    const web3Provider = new WalletConnectProvider({
+      rpc: {
+        69: "https://kovan.optimism.io",
+      },
     });
 
-    connector.on("connect", handleConnect);
+    web3Provider.enable();
 
-    // Check if connection is already established
-    if (!connector.connected) {
-      // create new session
-      connector.createSession();
+    web3Provider.updateRpcUrl(69);
 
-      
-      /* const provider = new providers.Web3Provider(web3Provider); */
-    }
-  }
+    const provider = new providers.Web3Provider(web3Provider);
+    const signer = provider.getSigner();
+    const userAddress = await signer.getAddress();
 
-  function handleConnect(error, payload) {
-    console.log(payload);
+    return {
+      provider,
+      signer,
+      userAddress,
+    };
   }
 
   return {

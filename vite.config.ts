@@ -15,13 +15,13 @@ export default defineConfig({
       // by node-globals-polyfill
       util: "rollup-plugin-node-polyfills/polyfills/util",
       sys: "util",
-      events: "rollup-plugin-node-polyfills/polyfills/events",
+      /* events: "rollup-plugin-node-polyfills/polyfills/events", */
       stream: "rollup-plugin-node-polyfills/polyfills/stream",
       path: "rollup-plugin-node-polyfills/polyfills/path",
       querystring: "rollup-plugin-node-polyfills/polyfills/qs",
       punycode: "rollup-plugin-node-polyfills/polyfills/punycode",
       url: "rollup-plugin-node-polyfills/polyfills/url",
-      string_decoder: "rollup-plugin-node-polyfills/polyfills/string-decoder",
+      /* string_decoder: "rollup-plugin-node-polyfills/polyfills/string-decoder", */
       http: "rollup-plugin-node-polyfills/polyfills/http",
       https: "rollup-plugin-node-polyfills/polyfills/http",
       os: "rollup-plugin-node-polyfills/polyfills/os",

@@ -15,7 +15,7 @@
   <p class="subtitle">Playable NFT (no really, the NFT itself is a game)</p>
 
   {#if $walletStore.userAddress}
-    <p class="name">Hi, {$walletStore.userAddress.substring(0, 20)}</p>
+    <p class="name">Hi, {$walletStore.userAddress}</p>
   {/if}
 
   {#if $walletStore.connected}

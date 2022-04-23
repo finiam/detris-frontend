@@ -54,14 +54,19 @@ function createWalletStore() {
     }));
   }
 
+  function setSigner(signer) {
+    update((store) => ({
+      ...store,
+      signer,
+    }));
+  }
+
   async function checkIfConnected() {
     const metamaskUser = await metamaskStore.setupMetamask();
 
     if (metamaskUser) {
       init(metamaskUser);
     }
-
-    /* const walletConnectUser = await walletConnectStore.connect(); */
   }
 
   async function connect(provider: string) {
@@ -76,7 +81,9 @@ function createWalletStore() {
         break;
 
       case "walletConnect":
-        await walletConnectStore.connect();
+        const walletConnectUser = await walletConnectStore.connect();
+
+        init(walletConnectUser);
 
         break;
     }
