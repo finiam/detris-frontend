@@ -14,8 +14,8 @@
   <Button />
 
   <div class="bg">
-    {#each { length: 6 } as _}
-      <FallingBlock />
+    {#each { length: 6 } as _, index}
+      <FallingBlock {index} />
       <Grain />
     {/each}
   </div>

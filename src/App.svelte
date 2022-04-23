@@ -3,6 +3,3 @@
 </script>
 
 <HomeScreen />
-
-<style>
-</style>

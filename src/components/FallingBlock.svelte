@@ -1,33 +1,30 @@
-<script>
+<script lang="ts">
   import { onDestroy, onMount } from "svelte";
+
+  export let index: number;
 
   let x = 0;
   let y = 0;
   let interval;
   let randomVisible = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-  let enterTimeout = Math.floor(Math.random() * (6000 - 1000 + 1000)) + 1000;
+  let enterTimeout = index * 400;
   let visible = false;
 
-  let colors = ["#ff5050", "#158CFA", "#F9F25D", "#D05DF9"];
+  let colors = ["#ff5050", "#158CFA", "#F9F25D", "#D05DF9", "#5DF9DD", "#fff"];
 
-  const randomPos = () => {
+  const randomPosX = () => {
     let minX = window.innerWidth / 5;
 
-    let randX = Math.floor(Math.random() * (minX * 3 - minX + 1)) + minX;
-    let randY = 0;
-
-    return { randX, randY };
+    return Math.floor(Math.random() * (minX * 3 - minX + 1)) + minX;
   };
 
   function initPosition() {
-    const randPos = randomPos();
-
-    x = randPos.randX;
-    y = randPos.randY;
+    y = 0;
+    x = randomPosX();
   }
 
   function changePosition() {
-    if (y < window.innerHeight) {
+    if (y < window.innerHeight - 100) {
       y += 50;
     } else {
       initPosition();
@@ -39,7 +36,7 @@
 
     setTimeout(() => {
       visible = true;
-      setInterval(changePosition, 800);
+      setInterval(changePosition, 900);
     }, enterTimeout);
   });
 
@@ -53,7 +50,7 @@
   style:top={`${y}px`}
   style:left={`${x}px`}
   style:display={visible ? "block" : "none"}
-  style={`--rand: ${colors[randomVisible]}`}
+  style={`--rand: ${colors[index]}`}
 >
   <!-- large square -->
   <svg
