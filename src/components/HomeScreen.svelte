@@ -1,0 +1,79 @@
+<script lang="ts">
+  import Button from "../components/Button.svelte";
+  import FallingBlock from "../components/FallingBlock.svelte";
+  import Grain from "../components/Grain.svelte";
+</script>
+
+<main>
+  <div class="title-wrap">
+    <h1 class="title title-shadow">DETRIS</h1>
+    <h1 class="title title-main">DETRIS</h1>
+  </div>
+  <p class="subtitle">Playable NFT (no really, the NFT is a game)</p>
+
+  <Button />
+
+  <div class="bg">
+    {#each { length: 6 } as _}
+      <FallingBlock />
+      <Grain />
+    {/each}
+  </div>
+</main>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5% auto 0;
+    height: 75vh;
+    width: 80%;
+    overflow: hidden;
+    background-color: var(--dark-blue);
+    border-radius: 20px 10px 50px 50px;
+    box-shadow: inset 10px 10px 0 -5px #fff, inset -2px -2px 0 3px #fff;
+
+    animation: glow 4s ease infinite alternate-reverse;
+  }
+  .title-wrap {
+    position: relative;
+    margin: 0 auto;
+    z-index: 3;
+  }
+  .title {
+    position: relative;
+    margin: 0;
+    font-size: 120px;
+    color: var(--red);
+    z-index: 2;
+    letter-spacing: -0.02em;
+  }
+  .title-main {
+    animation: glow 4s ease infinite alternate-reverse;
+  }
+  .title-shadow {
+    position: absolute;
+    top: 8px;
+    left: 4px;
+    color: #5ff2ef;
+    filter: drop-shadow(2px 8px 0 #000);
+  }
+  @keyframes glow {
+    0% {
+      filter: drop-shadow(5px 5px 20px #ffffff44);
+    }
+    100% {
+      filter: drop-shadow(10px 10px 15px #ffffff44);
+    }
+  }
+  .subtitle {
+    color: #fff;
+    margin: 40px 0;
+  }
+  .bg {
+    z-index: -1;
+    pointer-events: none;
+  }
+</style>
