@@ -8,8 +8,7 @@
 
   let showModal = false;
 
-  function toggleModal() {
-    console.log("click");
+  function toggleModal() {    
     showModal = !showModal;
   }
 </script>
@@ -72,7 +71,7 @@
   .title {
     position: relative;
     margin: 0;
-    font-size: 120px;
+    font-size: 80px;
     color: var(--red);
     z-index: 2;
     letter-spacing: -0.02em;
@@ -104,6 +103,7 @@
     margin: 40px 0;
     text-align: center;
     line-height: 1.4;
+    max-width: 90%;
   }
   .bg {
     z-index: -1;
@@ -116,5 +116,11 @@
     color: #fff;
     margin: 40px 0 0;
     cursor: pointer;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .title {
+      font-size: 120px;
+    }
   }
 </style>

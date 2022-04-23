@@ -22,7 +22,7 @@
   .wrapper {
     display: flex;
     height: 100%;
-    background: #1b1b1b;
+    background: #2f2c38;
   }
   .info {
     width: 15%;
@@ -30,7 +30,7 @@
   }
   .iframe-wrapper {
     width: 60%;
-    display: flex;
+    display: flex;    
   }
   p {
     color: #fff;
