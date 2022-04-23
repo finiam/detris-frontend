@@ -4,6 +4,14 @@
   import Grain from "../components/Grain.svelte";
   import CtaButton from "./CtaButton.svelte";
   import Connect from "./Connect.svelte";
+  import InfoModal from "./InfoModal.svelte";
+
+  let showModal = false;
+
+  function toggleModal() {
+    console.log("click");
+    showModal = !showModal;
+  }
 </script>
 
 <main>
@@ -22,6 +30,14 @@
     <CtaButton />
   {:else}
     <Connect />
+  {/if}
+
+  <button type="button" class="info-btn" on:click={toggleModal}
+    >How does it work?</button
+  >
+
+  {#if showModal}
+    <InfoModal close={toggleModal} />
   {/if}
 
   <div class="bg">
@@ -92,5 +108,13 @@
   .bg {
     z-index: -1;
     pointer-events: none;
+  }
+  .info-btn {
+    text-decoration: underline;
+    border: 0;
+    background: 0;
+    color: #fff;
+    margin: 40px 0 0;
+    cursor: pointer;
   }
 </style>

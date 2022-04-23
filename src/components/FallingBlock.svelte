@@ -24,7 +24,7 @@
   }
 
   function changePosition() {
-    if (y < window.innerHeight - 100) {
+    if (y < window.innerHeight - 300) {
       y += 50;
     } else {
       initPosition();
@@ -49,7 +49,7 @@
   class="wrapper"
   style:top={`${y}px`}
   style:left={`${x}px`}
-  style:display={visible ? "block" : "none"}
+  style:opacity={visible ? 1 : 0}
   style={`--rand: ${colors[index]}`}
 >
   <!-- large square -->
