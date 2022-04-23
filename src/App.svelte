@@ -6,7 +6,7 @@
   import walletStore from "./store/wallet";
 </script>
 
-{#if $gameStore.tokenId}
+{#if $gameStore.tokenId !== null}
   <GameScreen />
 {:else}
   <HomeScreen />

@@ -1,7 +1,7 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import { providers } from "ethers";
+import { providers, Signer } from "ethers";
 
 function createWalletConnectStore() {
   async function connect() {
@@ -16,8 +16,9 @@ function createWalletConnectStore() {
     // Check if connection is already established
     if (!connector.connected) {
       // create new session
-      connector.createSession();      
+      connector.createSession();
 
+      
       /* const provider = new providers.Web3Provider(web3Provider); */
     }
   }

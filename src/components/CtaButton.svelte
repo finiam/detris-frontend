@@ -14,13 +14,17 @@
   }
 </script>
 
-<button type="button" on:click={handleClick}>
-  {#if $walletStore.connected && !$walletStore.balance}
-    MINT TO PLAY
-  {/if}
+<button type="button" on:click={handleClick} disabled={$walletStore.loading}>
+  {#if $walletStore.loading}
+    LOADING...
+  {:else}
+    {#if $walletStore.connected && !$walletStore.balance}
+      MINT TO PLAY
+    {/if}
 
-  {#if $walletStore.connected && $walletStore.balance}
-    PLAY YOUR NFT
+    {#if $walletStore.connected && $walletStore.balance}
+      PLAY YOUR NFT
+    {/if}
   {/if}
 </button>
 

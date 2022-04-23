@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import contractStore from "./contract";
+import walletStore from "./wallet";
 
 function greateGameStore() {
   const store = writable({
@@ -11,15 +12,12 @@ function greateGameStore() {
   const { subscribe, update } = store;
 
   async function getAddressData() {
+    walletStore.setLoading(true);
+
     let tokenId = await contractStore.tokenOfOwnerByIndex();
     let tokenURI = await contractStore.tokenURI(tokenId);
 
-    /* let tokenURI =
-      "https://ipfs.io/ipfs/bafkreig6kjtn5r22sh72kaeme4r6pyejzf2u3jzjdlwwrahoz36vp2zr4m/"; */
-
-    /* let uri =
-      "https://ipfs.io/ipfs/bafkreih6opftdgxcjkybqffd5urn6yh7i6bwesgkt6u4acxlltrjrqdy5a/"; */
-
+    // whilte no folder
     let tempURI = tokenURI
       .split("/")
       .filter((_, i, arr) => i < arr.length - 1)
@@ -29,13 +27,13 @@ function greateGameStore() {
 
     let metadata = await metadataReq.json();
 
-    console.log(await metadataReq.json());
-
     update(() => ({
       tokenId,
       tokenURI,
       iframeSrc: metadata.animation_url,
     }));
+
+    walletStore.setLoading(false);
   }
 
   return {

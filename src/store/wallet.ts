@@ -20,6 +20,13 @@ function createWalletStore() {
 
   const { subscribe, set, update } = store;
 
+  function setLoading(loading: boolean) {
+    update((store) => ({
+      ...store,
+      loading,
+    }));
+  }
+
   function init(data) {
     update((store) => ({
       ...store,
@@ -35,9 +42,11 @@ function createWalletStore() {
 
     await contractStore.buildContract(signer);
 
-    let balance = await contractStore.balanceOf();
+    updateBalance();
+  }
 
-    console.log(balance);
+  async function updateBalance() {
+    let balance = await contractStore.balanceOf();
 
     update((store) => ({
       ...store,
@@ -77,6 +86,8 @@ function createWalletStore() {
     subscribe,
     checkIfConnected,
     connect,
+    setLoading,
+    updateBalance,
   };
 }
 

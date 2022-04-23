@@ -1,6 +1,7 @@
 import type { JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, ethers } from "ethers";
 import { get, writable } from "svelte/store";
+import walletStore from "./wallet";
 
 const ABI = [
   "function balanceOf(address owner) external view returns (uint256 balance)",
@@ -45,7 +46,17 @@ function buildContractsStore() {
   async function safeMint() {
     const { contract, signerAddress } = get(contractStore);
 
-    let tx = await contract.safeMint(signerAddress);
+    walletStore.setLoading(true);
+
+    let tx = (await contract.safeMint(
+      signerAddress
+    )) as ethers.providers.TransactionResponse;
+
+    await tx.wait();
+
+    await walletStore.updateBalance();
+
+    walletStore.setLoading(false);
   }
 
   async function tokenOfOwnerByIndex() {
