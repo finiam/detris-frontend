@@ -3,7 +3,6 @@
 </script>
 
 <div class="wrapper">
-  <div class="pad" />
   <iframe id="game-frame" title="Detris" src={$gameStore.iframeSrc} />
 </div>
 
