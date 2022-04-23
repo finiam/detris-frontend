@@ -33,9 +33,11 @@ function createWalletStore() {
   async function initContract() {
     const { signer } = get(store);
 
-    contractStore.buildContract(signer);
+    await contractStore.buildContract(signer);
 
     let balance = await contractStore.balanceOf();
+
+    console.log(balance);
 
     update((store) => ({
       ...store,
@@ -53,11 +55,21 @@ function createWalletStore() {
     /* const walletConnectUser = await walletConnectStore.connect(); */
   }
 
-  async function connect() {
-    const metamaskUser = await metamaskStore.connect(true);
+  async function connect(provider: string) {
+    switch (provider) {
+      case "metamask":
+        const metamaskUser = await metamaskStore.connect(true);
 
-    if (metamaskUser) {
-      init(metamaskUser);
+        if (metamaskUser) {
+          init(metamaskUser);
+        }
+
+        break;
+
+      case "walletConnect":
+        await walletConnectStore.connect();
+
+        break;
     }
   }
 

@@ -2,59 +2,55 @@ import type { JsonRpcSigner } from "@ethersproject/providers";
 import { Contract, ethers } from "ethers";
 import { get, writable } from "svelte/store";
 
-/* "function mint(address to, uint256 amount, uint256 _tokenType) public virtual", */
-
 const ABI = [
   "function balanceOf(address owner) external view returns (uint256 balance)",
-  "function safeMint(address to, uint256 qty) public",
+  "function safeMint(address to) public",
+  "function tokenOfOwnerByIndex(address to) public",
 ];
 
 function buildContractsStore() {
   const contractStore = writable({
     contract: null as Contract,
     signer: null as JsonRpcSigner,
+    signerAddress: null as string,
   });
 
   const { update } = contractStore;
 
-  function buildContract(signer: JsonRpcSigner) {
+  async function buildContract(signer: JsonRpcSigner) {
     const contract = new Contract(
       import.meta.env.VITE_CONTRACT_ADDRESS as string,
       ABI,
       signer
     );
 
+    let signerAddress = await signer.getAddress();
+
     update(() => ({
       contract,
       signer,
+      signerAddress,
     }));
   }
 
   async function balanceOf() {
-    const { contract, signer } = get(contractStore);
+    const { contract, signerAddress } = get(contractStore);
 
-    let res = await contract.balanceOf(await signer.getAddress());
+    let res = await contract.balanceOf(signerAddress);
 
-    console.log(res);
-    console.log(ethers.utils.formatEther(res))
-    console.log(Number(ethers.utils.formatEther(res)) > 0)
     return Number(ethers.utils.formatEther(res));
   }
 
   async function safeMint() {
-    const { contract, signer } = get(contractStore);
+    const { contract, signerAddress } = get(contractStore);
 
-    let res = await contract.safeMint(await signer.getAddress(), 1);
-
-    console.log(await res);
+    let tx = await contract.safeMint(signerAddress);
   }
 
   async function tokenOfOwnerByIndex() {
-    const { contract, signer } = get(contractStore);
+    const { contract, signerAddress } = get(contractStore);
 
-    let res = await contract.tokenOfOwnerByIndex(await signer.getAddress(), 0);
-
-    console.log(await res);
+    let tx = await contract.tokenOfOwnerByIndex(signerAddress);
   }
 
   return {

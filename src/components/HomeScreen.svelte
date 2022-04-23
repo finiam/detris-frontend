@@ -1,8 +1,9 @@
 <script lang="ts">
   import walletStore from "../store/wallet";
-  import Button from "../components/Button.svelte";
   import FallingBlock from "../components/FallingBlock.svelte";
   import Grain from "../components/Grain.svelte";
+  import CtaButton from "./CtaButton.svelte";
+  import Connect from "./Connect.svelte";
 </script>
 
 <main>
@@ -11,13 +12,17 @@
     <h1 class="title title-main">DETRIS</h1>
   </div>
 
-  <p class="subtitle">Playable NFT (no really, the NFT is a game)</p>
+  <p class="subtitle">Playable NFT (no really, the NFT itself is a game)</p>
 
   {#if $walletStore.userAddress}
     <p class="name">Hi, {$walletStore.userAddress.substring(0, 20)}</p>
   {/if}
 
-  <Button />
+  {#if $walletStore.connected}
+    <CtaButton />
+  {:else}
+    <Connect />
+  {/if}
 
   <div class="bg">
     {#each { length: 6 } as _, index}
@@ -81,6 +86,8 @@
   .subtitle {
     color: #fff;
     margin: 40px 0;
+    text-align: center;
+    line-height: 1.4;
   }
   .bg {
     z-index: -1;

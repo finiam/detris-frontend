@@ -4,7 +4,7 @@ import QRCodeModal from "@walletconnect/qrcode-modal";
 import { providers } from "ethers";
 
 function createWalletConnectStore() {
-  async function connect(showPrompt?: boolean) {
+  async function connect() {
     // Create a connector
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org", // Required
