@@ -3,7 +3,6 @@
   import walletStore from "../store/wallet";
 </script>
 
-<p>Connect to play</p>
 <div>
   <button
     type="button"
@@ -24,9 +23,6 @@
 </div>
 
 <style>
-  p {
-    color: #fff;
-  }
   div {
     display: flex;
     gap: 16px;

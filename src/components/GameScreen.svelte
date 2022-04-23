@@ -9,6 +9,9 @@
     <p>
       <a href={$gameStore.tokenURI} target="_blank"> View NFT metadata on IPFS </a>
     </p>
+    <p>
+      <a href={$gameStore.iframeSrc} target="_blank"> Play on IPFS </a>
+    </p>
   </div>
   <div class="iframe-wrapper">
     <Iframe />
@@ -18,6 +21,8 @@
 <style>
   .wrapper {
     display: flex;
+    height: 100%;
+    background: #1b1b1b;
   }
   .info {
     width: 15%;
