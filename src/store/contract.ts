@@ -1,11 +1,11 @@
 import type { JsonRpcSigner } from "@ethersproject/providers";
-import { Contract, ethers } from "ethers";
+import { BigNumber, Contract, ethers } from "ethers";
 import { get, writable } from "svelte/store";
 
 const ABI = [
   "function balanceOf(address owner) external view returns (uint256 balance)",
   "function safeMint(address to) public",
-  "function tokenOfOwnerByIndex(address to) public",
+  "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
 ];
 
 function buildContractsStore() {
@@ -50,7 +50,11 @@ function buildContractsStore() {
   async function tokenOfOwnerByIndex() {
     const { contract, signerAddress } = get(contractStore);
 
-    let tx = await contract.tokenOfOwnerByIndex(signerAddress);
+    let tx = await contract.tokenOfOwnerByIndex(signerAddress, 0);
+
+    let number = BigNumber.from(await tx);
+
+    return number.toNumber();
   }
 
   return {

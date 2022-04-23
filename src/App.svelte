@@ -1,14 +1,15 @@
 <script lang="ts">
+  import GameScreen from "./components/GameScreen.svelte";
   import HomeScreen from "./components/HomeScreen.svelte";
   import Mint from "./components/Mint.svelte";
+  import gameStore from "./store/state";
   import walletStore from "./store/wallet";
 </script>
 
 <div>
-  <!-- {#if !$walletStore.connected}
-    <HomeScreen />
+  {#if $gameStore.tokenId}
+    <GameScreen />
   {:else}
-    <Mint />
-  {/if} -->
-  <HomeScreen />
+    <HomeScreen />
+  {/if}
 </div>

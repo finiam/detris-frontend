@@ -1,11 +1,12 @@
 <script lang="ts">
+  import gameStore from "../store/state";
   import contractStore from "../store/contract";
   import walletStore from "../store/wallet";
 
   async function handleClick() {
     if ($walletStore.balance > 0) {
       // show owned nft
-      contractStore.tokenOfOwnerByIndex();
+      gameStore.setTokenId();
     } else {
       //mint
       contractStore.safeMint();

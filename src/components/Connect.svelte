@@ -1,20 +1,26 @@
 <script lang="ts">
   import contractStore from "../store/contract";
   import walletStore from "../store/wallet";
-
-  async function handleClick() {
-    if (!$walletStore.connected) {
-      walletStore.connect("metamask");
-
-      return;
-    }
-  }
 </script>
 
 <p>Connect to play</p>
 <div>
-  <button type="button" on:click={handleClick}> METAMASK </button>
-  <button type="button" on:click={handleClick}> WALLET CONNECT </button>
+  <button
+    type="button"
+    on:click={() => {
+      walletStore.connect("metamask");
+    }}
+  >
+    METAMASK
+  </button>
+  <button
+    type="button"
+    on:click={() => {
+      walletStore.connect("walletConnect");
+    }}
+  >
+    WALLET CONNECT
+  </button>
 </div>
 
 <style>
