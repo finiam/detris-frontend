@@ -23,7 +23,12 @@
 <div class="wrapper">
   <div class="modal">
     <h2>How this thing works</h2>
-    <p>Because it's a miracle</p>
+    <p>
+      DETRIS is a playful combination of a playable NFT and a puzzle game in
+      Optimism. You mint an NFT that serves as an interface to play the classic
+      game of Tetris. This NFT outputs a set of instructions that allows the
+      owner to create a transaction and eternalise your ENDGAME and high score.
+    </p>
   </div>
 </div>
 
