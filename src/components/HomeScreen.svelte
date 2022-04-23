@@ -10,10 +10,12 @@
     <h1 class="title title-shadow">DETRIS</h1>
     <h1 class="title title-main">DETRIS</h1>
   </div>
-  {#if $walletStore.userAddress}
-    {$walletStore.userAddress}
-  {/if}
+
   <p class="subtitle">Playable NFT (no really, the NFT is a game)</p>
+
+  {#if $walletStore.userAddress}
+    <p class="name">Hi, {$walletStore.userAddress.substring(0, 20)}</p>
+  {/if}
 
   <Button />
 
@@ -63,6 +65,10 @@
     left: 4px;
     color: #5ff2ef;
     filter: drop-shadow(2px 8px 0 #000);
+  }
+  .name {
+    color: #fff;
+    margin: 20px 0;
   }
   @keyframes glow {
     0% {

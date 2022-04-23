@@ -1,19 +1,25 @@
 <script lang="ts">
   import walletStore from "../store/wallet";
+
+  function handleClick() {
+    if ($walletStore.balance) {
+      // show owned nft
+    } else {//mint
+    }
+  }
 </script>
 
-<button
-  type="button"
-  on:click={() => {
-    walletStore.init(true);
-  }}
->
-  {#if $walletStore.loading}
-    LOADING
-  {:else if !$walletStore.connected}
+<button type="button" on:click={walletStore.connect}>
+  {#if !$walletStore.connected}
     CONNECT TO PLAY
-  {:else}
-    PLAY
+  {/if}
+
+  {#if $walletStore.connected && !$walletStore.balance}
+    MINT TO PLAY
+  {/if}
+
+  {#if $walletStore.connected && $walletStore.balance}
+    PLAY YOUR NFT
   {/if}
 </button>
 
