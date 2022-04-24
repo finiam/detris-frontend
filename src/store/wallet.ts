@@ -1,8 +1,4 @@
-import detectEthereumProvider from "@metamask/detect-provider";
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
 import type { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
-import { ethers, providers } from "ethers";
 import { get, writable } from "svelte/store";
 import metamaskStore from "./metamaskStore";
 import contractStore from "./contract";
