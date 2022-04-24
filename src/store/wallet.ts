@@ -5,7 +5,6 @@ import type { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import { ethers, providers } from "ethers";
 import { get, writable } from "svelte/store";
 import metamaskStore from "./metamaskStore";
-import walletConnectStore from "./walletConnectStore";
 import contractStore from "./contract";
 
 function createWalletStore() {
@@ -82,12 +81,12 @@ function createWalletStore() {
 
         break;
 
-      case "walletConnect":
+      /* case "walletConnect":
         const walletConnectUser = await walletConnectStore.connect();
 
         init(walletConnectUser);
 
-        break;
+        break; */
     }
   }
 
