@@ -46,4 +46,7 @@
   button:hover {
     transform: scale(1.05);
   }
+  p {
+    color: #fff;
+  }
 </style>

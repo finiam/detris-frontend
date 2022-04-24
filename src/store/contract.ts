@@ -82,8 +82,6 @@ function buildContractsStore() {
     await tx.wait();
 
     bridgeToken();
-
-    walletStore.setLoading(false);
   }
 
   async function bridgeToken() {
@@ -108,6 +106,8 @@ function buildContractsStore() {
       ...store,
       message: "Please change to Optimistic Kovan",
     }));
+
+    walletStore.setLoading(false);
   }
 
   async function tokenOfOwnerByIndex() {
