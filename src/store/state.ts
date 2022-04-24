@@ -15,15 +15,15 @@ function greateGameStore() {
     walletStore.setLoading(true);
 
     let tokenId = await contractStore.tokenOfOwnerByIndex();
-    let tokenURI = await contractStore.tokenURI(tokenId);
+    /* let tokenURI = await contractStore.tokenURI(tokenId); */
 
-    // whilte no folder
-    let tempURI = tokenURI
-      .split("/")
-      .filter((_, i, arr) => i < arr.length - 1)
-      .join("/");
+    console.log(tokenId);
 
-    let metadataReq = await fetch(tempURI);
+    return;
+    let tokenURI = await contractStore.getTokenFromL2();
+    console.log(tokenURI);
+
+    let metadataReq = await fetch(tokenURI);
 
     let metadata = await metadataReq.json();
 

@@ -7,11 +7,15 @@
   <div class="info">
     <p>Move the pieces with<br /> W A S D</p>
     <p>
-      <a href={$gameStore.tokenURI} target="_blank"> View NFT metadata on IPFS </a>
+      <a href={$gameStore.tokenURI} target="_blank">
+        View NFT metadata on IPFS
+      </a>
     </p>
     <p>
       <a href={$gameStore.iframeSrc} target="_blank"> Play on IPFS </a>
     </p>
+
+    <!-- <button type="button" on:click={mintGameState}>Mint game state on L2</button> -->
   </div>
   <div class="iframe-wrapper">
     <Iframe />
@@ -30,7 +34,7 @@
   }
   .iframe-wrapper {
     width: 60%;
-    display: flex;    
+    display: flex;
   }
   p {
     color: #fff;

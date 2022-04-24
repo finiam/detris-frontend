@@ -48,6 +48,8 @@ function createWalletStore() {
   async function updateBalance() {
     let balance = await contractStore.balanceOf();
 
+    console.log(balance);
+
     update((store) => ({
       ...store,
       balance,

@@ -9,7 +9,7 @@
       gameStore.getAddressData();
     } else {
       //mint
-      contractStore.safeMint();
+      await contractStore.safeMint();
     }
   }
 </script>
@@ -27,6 +27,7 @@
     {/if}
   {/if}
 </button>
+<p>{$contractStore.message}</p>
 
 <style>
   button {
