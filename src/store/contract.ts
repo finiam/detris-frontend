@@ -16,10 +16,14 @@ const L1_ABI = ["function deposit(uint256 _tokenId) public override"];
 
 const L2_ABI = [
   "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
+  "function tokenURI(uint256 id) public view virtual returns (string memory)",
   "function withdraw(uint256 _tokenId) external override onlyInitialized",
 ];
 
-const ENDGAME_ABI = ["function safeMint(string memory uri) public"];
+const ENDGAME_ABI = [
+  "function safeMint(string memory uri) public",
+  "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
+];
 
 const DETRIS_ADDRESS = import.meta.env.VITE_DETRIS_ADDRESS as string;
 const L1_ADDRESS = import.meta.env.VITE_L1_ADDRESS as string;
@@ -113,8 +117,6 @@ function buildContractsStore() {
 
     let number = BigNumber.from(await tx);
 
-    console.log(number);
-
     return number.toNumber();
   }
 
@@ -127,22 +129,32 @@ function buildContractsStore() {
   }
 
   async function getTokenFromL2() {
-    const { l2Contract, detrisContract, signerAddress } = get(contractStore);
+    const { l2Contract, signerAddress } = get(contractStore);
 
     let id = await l2Contract.tokenOfOwnerByIndex(signerAddress, 0);
-    const tx = await l2Contract.withdraw(id);
+
+    let tokenTx = await l2Contract.tokenURI(id);
+
+    return { tokenURI: tokenTx, tokenId: id };
+  }
+
+  async function mintGameState(data: string) {
+    const { endGameContract, signerAddress } = get(contractStore);
+
+    walletStore.setLoading(true);
+
+    let tx = await endGameContract.safeMint(data);
 
     await tx.wait();
 
-    let tokenTx = await detrisContract.tokenURI(id);
+    let tokenTx = await endGameContract.tokenOfOwnerByIndex(signerAddress, 0);
 
-    return tokenTx;
-  }
+    update((state) => ({
+      ...state,
+      message: `Minted your game state: Token ${tokenTx}`,
+    }));
 
-  async function mintGameState() {
-    const { endGameContract } = get(contractStore);
-
-    /* let tx = await endGameContract.safeMint(id); */
+    walletStore.setLoading(false);
   }
 
   return {
@@ -154,6 +166,7 @@ function buildContractsStore() {
     bridgeToken,
     subscribe,
     getTokenFromL2,
+    mintGameState,
   };
 }
 

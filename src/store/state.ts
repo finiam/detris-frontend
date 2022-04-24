@@ -14,18 +14,14 @@ function greateGameStore() {
   async function getAddressData() {
     walletStore.setLoading(true);
 
-    let tokenId = await contractStore.tokenOfOwnerByIndex();
-    /* let tokenURI = await contractStore.tokenURI(tokenId); */
-
-    console.log(tokenId);
-
-    return;
-    let tokenURI = await contractStore.getTokenFromL2();
+    let { tokenURI, tokenId } = await contractStore.getTokenFromL2();
     console.log(tokenURI);
 
     let metadataReq = await fetch(tokenURI);
 
     let metadata = await metadataReq.json();
+
+    console.log(tokenId);
 
     update(() => ({
       tokenId,

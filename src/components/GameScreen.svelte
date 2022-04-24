@@ -1,6 +1,9 @@
 <script>
+  import contractStore from "../store/contract";
   import gameStore from "../store/state";
   import Iframe from "./Iframe.svelte";
+
+  let val = "";
 </script>
 
 <div class="wrapper">
@@ -14,8 +17,18 @@
     <p>
       <a href={$gameStore.iframeSrc} target="_blank"> Play on IPFS </a>
     </p>
+    <br />
 
-    <!-- <button type="button" on:click={mintGameState}>Mint game state on L2</button> -->
+    <p>Mint game state on L2 :)</p>
+    <textarea bind:value={val} rows="6" />
+    <button
+      type="button"
+      class="mint-btn"
+      on:click={() => {
+        contractStore.mintGameState(val);
+      }}>Mint</button
+    >
+    <p>{$contractStore.message}</p>
   </div>
   <div class="iframe-wrapper">
     <Iframe />
@@ -42,5 +55,18 @@
   }
   a {
     color: #fff;
+  }
+  .mint-btn {
+    margin: 20px 0 10px;
+    font-size: 20px;
+    padding: 0;
+    text-align: left;
+    color: var(--red);
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  textarea {
+    border: 2px solid var(--red);
   }
 </style>
