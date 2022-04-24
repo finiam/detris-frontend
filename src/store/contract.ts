@@ -96,10 +96,10 @@ function buildContractsStore() {
       L1_ADDRESS
     );
 
-    console.log(isApproved);
-
     if (!isApproved) {
-      await detrisContract.setApprovalForAll(L1_ADDRESS, true);
+      let approvalTx = await detrisContract.setApprovalForAll(L1_ADDRESS, true);
+
+      await approvalTx.wait();
     }
 
     await l1Contract.deposit(tokenId);
