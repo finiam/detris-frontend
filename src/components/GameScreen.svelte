@@ -24,6 +24,7 @@
     <button
       type="button"
       class="mint-btn"
+      disabled={!val}
       on:click={() => {
         contractStore.mintGameState(val);
       }}>Mint</button
@@ -39,7 +40,6 @@
   .wrapper {
     display: flex;
     height: 100%;
-    background: #2f2c38;
   }
   .info {
     width: 15%;

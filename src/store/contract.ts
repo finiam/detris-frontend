@@ -81,8 +81,6 @@ function buildContractsStore() {
 
     await tx.wait();
 
-    await walletStore.updateBalance();
-
     bridgeToken();
 
     walletStore.setLoading(false);
@@ -98,8 +96,10 @@ function buildContractsStore() {
       L1_ADDRESS
     );
 
+    console.log(isApproved);
+
     if (!isApproved) {
-      await detrisContract.setApprovalForAll(L1_ADDRESS, false);
+      await detrisContract.setApprovalForAll(L1_ADDRESS, true);
     }
 
     await l1Contract.deposit(tokenId);
@@ -139,6 +139,8 @@ function buildContractsStore() {
   }
 
   async function mintGameState(data: string) {
+    if (!data) return;
+
     const { endGameContract, signerAddress } = get(contractStore);
 
     walletStore.setLoading(true);
