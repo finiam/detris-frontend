@@ -3,6 +3,7 @@ import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
 import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -41,6 +42,9 @@ export default defineConfig({
       zlib: "rollup-plugin-node-polyfills/polyfills/zlib",
       tty: "rollup-plugin-node-polyfills/polyfills/tty",
       domain: "rollup-plugin-node-polyfills/polyfills/domain",
+
+      // Base path for absolute imports
+      src: path.resolve("/src"),
     },
   },
   optimizeDeps: {
