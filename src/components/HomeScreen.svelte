@@ -1,7 +1,7 @@
 <script lang="ts">
-  import walletStore from "../store/wallet";
-  import FallingBlock from "../components/FallingBlock.svelte";
-  import Grain from "../components/Grain.svelte";
+  import walletStore from "src/stores/wallet";
+  import FallingBlock from "src/components/FallingBlock.svelte";
+  import Grain from "src/components/Grain.svelte";
   import CtaButton from "./CtaButton.svelte";
   import Connect from "./Connect.svelte";
   import InfoModal from "./InfoModal.svelte";

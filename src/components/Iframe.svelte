@@ -1,9 +1,9 @@
 <script lang="ts">
-  import gameStore from "../store/state";
+  import appState from "src/stores/appState";
 </script>
 
 <div class="wrapper">
-  <iframe id="game-frame" title="Detris" src={$gameStore.iframeSrc} />
+  <iframe id="game-frame" title="Detris" src={$appState.iframeSrc} />
 </div>
 
 <style>

@@ -1,6 +1,5 @@
 <script lang="ts">
-  import contractStore from "../store/contract";
-  import walletStore from "../store/wallet";
+  import walletStore from "src/stores/wallet";
 </script>
 
 <div>
