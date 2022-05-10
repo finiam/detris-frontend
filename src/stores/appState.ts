@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 import contractStore from "./contract";
 import walletStore from "./wallet";
 
-function greateGameStore() {
+function createAppState() {
   const store = writable({
     tokenId: null,
     tokenURI: null,
@@ -38,6 +38,6 @@ function greateGameStore() {
   };
 }
 
-const gameStore = greateGameStore();
+const appState = createAppState();
 
-export default gameStore;
+export default appState;

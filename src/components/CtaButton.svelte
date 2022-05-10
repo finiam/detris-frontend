@@ -1,12 +1,12 @@
 <script lang="ts">
-  import gameStore from "../store/state";
-  import contractStore from "../store/contract";
-  import walletStore from "../store/wallet";
+  import appState from "src/stores/appState";
+  import contractStore from "src/stores/contract";
+  import walletStore from "src/stores/wallet";
 
   async function handleClick() {
     if ($walletStore.balance > 0) {
       // show owned nft
-      gameStore.getAddressData();
+      appState.getAddressData();
     } else {
       //mint
       await contractStore.safeMint();

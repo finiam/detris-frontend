@@ -1,8 +1,8 @@
 import type { JsonRpcSigner, Web3Provider } from "@ethersproject/providers";
 import { get, writable } from "svelte/store";
-import metamaskStore from "./metamaskStore";
+import metamaskStore from "./metamask";
 import contractStore from "./contract";
-import walletConnectStore from "./walletConnectStore";
+import walletConnectStore from "./walletConnect";
 
 function createWalletStore() {
   const store = writable({

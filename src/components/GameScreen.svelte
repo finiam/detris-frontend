@@ -1,6 +1,6 @@
 <script>
-  import contractStore from "../store/contract";
-  import gameStore from "../store/state";
+  import contractStore from "src/stores/contract";
+  import appState from "src/stores/appState";
   import Iframe from "./Iframe.svelte";
 
   let val = "";
@@ -10,12 +10,12 @@
   <div class="info">
     <p>Move the pieces with<br /> W A S D</p>
     <p>
-      <a href={$gameStore.tokenURI} target="_blank">
+      <a href={$appState.tokenURI} target="_blank">
         View NFT metadata on IPFS
       </a>
     </p>
     <p>
-      <a href={$gameStore.iframeSrc} target="_blank"> Play on IPFS </a>
+      <a href={$appState.iframeSrc} target="_blank"> Play on IPFS </a>
     </p>
     <br />
 

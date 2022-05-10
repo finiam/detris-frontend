@@ -1,12 +1,10 @@
 <script lang="ts">
   import GameScreen from "./components/GameScreen.svelte";
   import HomeScreen from "./components/HomeScreen.svelte";
-  import Mint from "./components/Mint.svelte";
-  import gameStore from "./store/state";
-  import walletStore from "./store/wallet";
+  import appState from "./stores/appState";
 </script>
 
-{#if $gameStore.tokenId !== null}
+{#if $appState.tokenId !== null}
   <GameScreen />
 {:else}
   <HomeScreen />
