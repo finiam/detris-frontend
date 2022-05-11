@@ -59,7 +59,7 @@ function createWalletStore() {
       userAddress: null,
       connected: false,
     }));
-  }  
+  }
 
   async function initContract() {
     const { signer } = get(store);
@@ -94,7 +94,6 @@ function createWalletStore() {
 
       return;
     }
-
   }
 
   async function connect(provider: string) {
