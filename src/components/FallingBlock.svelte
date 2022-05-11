@@ -8,7 +8,6 @@
   let y = 0;
   let interval;
   let randomVisible = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-  /* let enterTimeout = Math.floor(Math.random() * (1500 - 200 + 1)) + 200; */
   let enterTimeout = index * 900;
 
   let colors = ["#ff5050", "#158CFA", "#F9F25D", "#D05DF9", "#5DF9DD", "#fff"];

@@ -1,7 +1,5 @@
 <script lang="ts">
   export let shape: number;
-
-  console.log(shape);
 </script>
 
 {#if shape === 1}
