@@ -1,5 +1,6 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { providers } from "ethers";
+import walletStore from "./wallet";
 
 function createMetamaskStore() {
   async function connect(showPrompt?: boolean) {
@@ -13,6 +14,8 @@ function createMetamaskStore() {
     const signer = provider.getSigner();
     const userAddress = await signer.getAddress();
 
+    setupEventListeners(web3Provider);
+
     return {
       signer,
       userAddress,
@@ -20,7 +23,15 @@ function createMetamaskStore() {
     };
   }
 
-  async function setupMetamask() {
+  function setupEventListeners(provider: any) {
+    // Subscribe to accounts change
+    provider.on("accountsChanged", walletStore.handleAccountChange);
+
+    // Subscribe to accounts change
+    provider.on("chainChanged", walletStore.handleChainChange);
+  }
+
+  async function init() {
     if ((window.ethereum as any).selectedAddress) {
       return connect(true);
     }
@@ -30,7 +41,7 @@ function createMetamaskStore() {
 
   return {
     connect,
-    setupMetamask,
+    init,
   };
 }
 

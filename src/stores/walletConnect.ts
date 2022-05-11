@@ -1,5 +1,6 @@
 import { providers, Signer } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import walletStore from "./wallet";
 
 function createWalletConnectStore() {
   async function connect() {
@@ -14,6 +15,8 @@ function createWalletConnectStore() {
 
     web3Provider.updateRpcUrl(69);
 
+    setupEventListeners(web3Provider);
+
     const provider = new providers.Web3Provider(web3Provider);
     const signer = provider.getSigner();
     const userAddress = await signer.getAddress();
@@ -25,8 +28,30 @@ function createWalletConnectStore() {
     };
   }
 
+  function setupEventListeners(provider: any) {
+    // Subscribe to accounts change
+    provider.on("accountsChanged", walletStore.handleAccountChange);
+
+    // Subscribe to accounts change
+    provider.on("chainChanged", walletStore.handleChainChange);
+
+    // Subscribe to session disconnection
+    provider.on("disconnect", walletStore.handleProviderDisconnect);
+  }
+
+  async function init() {
+    const stored = localStorage.getItem("walletconnect");
+
+    if (stored) {
+      return connect();
+    }
+
+    return null;
+  }
+
   return {
     connect,
+    init,
   };
 }
 

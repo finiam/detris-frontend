@@ -33,6 +33,34 @@ function createWalletStore() {
     initContract();
   }
 
+  function handleAccountChange(data: string[]) {
+    console.log("accountsChanged", data);
+
+    if (data.length === 0) {
+      window.location.reload();
+    } else if (data[0] !== get(store).userAddress) {
+      update((store) => ({
+        ...store,
+        userAddress: null,
+        connected: false,
+      }));
+    }
+  }
+
+  function handleChainChange(chainId: number) {
+    console.log("chainChanged", chainId);
+  }
+
+  function handleProviderDisconnect(code: number, reason: string) {
+    console.log("disconnect", code, reason);
+
+    update((store) => ({
+      ...store,
+      userAddress: null,
+      connected: false,
+    }));
+  }
+
   async function initContract() {
     const { signer } = get(store);
 
@@ -44,27 +72,29 @@ function createWalletStore() {
   async function updateBalance() {
     let balance = await contractStore.balanceOf();
 
-    console.log(balance);
-
     update((store) => ({
       ...store,
       balance,
     }));
   }
 
-  function setSigner(signer) {
-    update((store) => ({
-      ...store,
-      signer,
-    }));
-  }
-
   async function checkIfConnected() {
-    const metamaskUser = await metamaskStore.setupMetamask();
+    const metamaskUser = await metamaskStore.init();
 
     if (metamaskUser) {
       init(metamaskUser);
+
+      return;
     }
+
+    const walletConnectUser = await walletConnectStore.init();
+
+    if (walletConnectUser) {
+      init(walletConnectUser);
+
+      return;
+    }
+
   }
 
   async function connect(provider: string) {
@@ -93,6 +123,9 @@ function createWalletStore() {
     connect,
     setLoading,
     updateBalance,
+    handleAccountChange,
+    handleChainChange,
+    handleProviderDisconnect,
   };
 }
 
