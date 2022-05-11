@@ -33,8 +33,6 @@ function createMetamaskStore() {
 
   async function init() {
     if ((window.ethereum as any).selectedAddress) {
-      console.log((window.ethereum as any).selectedAddress);
-
       return connect(true);
     }
 
