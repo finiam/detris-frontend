@@ -6,6 +6,7 @@
 <div class="wrap">
   <Button
     type="button"
+    data-type="button"
     on:click={() => {
       walletStore.connect("metamask");
     }}>METAMASK</Button
