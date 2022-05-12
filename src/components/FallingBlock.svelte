@@ -14,7 +14,7 @@
 
   function initPosition() {
     x = Math.max((index * window.innerWidth) / 8, 20);
-    y = Math.floor(Math.random() * (0 - -200 + 1)) + -200;
+    y = Math.floor(Math.random() * 200) + -200;
   }
 
   function changePosition() {
@@ -57,7 +57,7 @@
 
   @media (min-width: 500px) {
     .wrapper {
-      width: 100px;
+      width: 120px;
     }
   }
   
