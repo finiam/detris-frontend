@@ -1,8 +1,11 @@
 <script lang="ts">
+  import Head from "src/components/Head.svelte";
   import GameScreen from "./components/GameScreen.svelte";
   import HomeScreen from "./components/HomeScreen.svelte";
   import appState from "./stores/appState";
 </script>
+
+<Head />
 
 {#if $appState.tokenId !== null}
   <GameScreen />
