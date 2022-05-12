@@ -14,7 +14,12 @@
   }
 </script>
 
-<button type="button" on:click={handleClick} disabled={$walletStore.loading}>
+<button
+  class="button"
+  type="button"
+  on:click={handleClick}
+  disabled={$walletStore.loading}
+>
   {#if $walletStore.loading}
     LOADING...
   {:else}
@@ -27,12 +32,12 @@
     {/if}
   {/if}
 </button>
-<p>{$contractStore.message}</p>
+<p class="message">{$contractStore.message}</p>
 
 <style>
-  button {
-    font-size: 18px;
-    padding: 20px 40px;
+  .button {
+    font-size: 14px;
+    padding: 8px 10px;
     color: #000;
     border: 0;
     border-radius: 4px;
@@ -43,10 +48,17 @@
 
     transition: transform 0.5s ease;
   }
-  button:hover {
+  .button:hover {
     transform: scale(1.05);
   }
-  p {
+  .message {
     color: #fff;
+  }
+
+  @media screen and (min-width: 500px) {
+    .button {
+      font-size: 18px;
+      padding: 20px 40px;
+    }
   }
 </style>

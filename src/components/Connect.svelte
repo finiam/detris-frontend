@@ -1,45 +1,34 @@
 <script lang="ts">
   import walletStore from "src/stores/wallet";
+  import Button from "./Button.svelte";
 </script>
 
-<div>
-  <button
+<div class="wrap">
+  <Button
     type="button"
+    data-type="button"
     on:click={() => {
       walletStore.connect("metamask");
-    }}
+    }}>METAMASK</Button
   >
-    METAMASK
-  </button>
-  <button
+  <Button
     type="button"
     on:click={() => {
       walletStore.connect("walletConnect");
-    }}
+    }}>WALLET CONNECT</Button
   >
-    WALLET CONNECT
-  </button>
 </div>
 
 <style>
-  div {
+  .wrap {
     display: flex;
+    flex-direction: column;
     gap: 16px;
   }
-  button {
-    font-size: 18px;
-    padding: 20px 40px;
-    color: #000;
-    border: 0;
-    border-radius: 4px;
-    background: var(--red);
-    cursor: pointer;
-    box-shadow: inset 2px 2px 0 0px #ffffffdd;
-    filter: drop-shadow(5px 5px 1px #000);
 
-    transition: transform 0.5s ease;
-  }
-  button:hover {
-    transform: scale(1.05);
+  @media screen and (min-width: 500px) {
+    .wrap {
+      flex-direction: row;
+    }
   }
 </style>

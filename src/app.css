@@ -11,9 +11,13 @@ body,
   height: 100%;
 }
 body {
+  margin: 0;
   background: #111;
   font-family: var(--pixel-font);
   line-height: 1.4;
+}
+#app {
+  display: flex;
 }
 button,
 input {

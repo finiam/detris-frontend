@@ -8,7 +8,7 @@
 
   let showModal = false;
 
-  function toggleModal() {    
+  function toggleModal() {
     showModal = !showModal;
   }
 </script>
@@ -40,8 +40,10 @@
   {/if}
 
   <div class="bg">
-    {#each { length: 6 } as _, index}
+    {#each { length: 7 } as _, index}
       <FallingBlock {index} />
+    {/each}
+    {#each { length: 12 } as _, index}
       <Grain />
     {/each}
   </div>
@@ -50,12 +52,15 @@
 <style>
   main {
     display: flex;
+    align-self: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 5% auto 0;
+    margin: auto;
     height: 75vh;
     width: 80%;
+    max-width: 1200px;
+    max-height: 800px;
     overflow: hidden;
     background-color: var(--dark-blue);
     border-radius: 20px 10px 50px 50px;
@@ -71,7 +76,7 @@
   .title {
     position: relative;
     margin: 0;
-    font-size: 80px;
+    font-size: 40px;
     color: var(--red);
     z-index: 2;
     letter-spacing: -0.02em;
@@ -81,10 +86,10 @@
   }
   .title-shadow {
     position: absolute;
-    top: 8px;
-    left: 4px;
+    top: 2px;
+    left: 2px;
     color: #5ff2ef;
-    filter: drop-shadow(2px 8px 0 #000);
+    filter: drop-shadow(0px 2px 0 #000);
   }
   .name {
     color: #fff;
@@ -99,8 +104,9 @@
     }
   }
   .subtitle {
-    color: #fff;
     margin: 40px 0;
+    font-size: 14px;
+    color: #fff;
     text-align: center;
     line-height: 1.4;
     max-width: 90%;
@@ -116,6 +122,20 @@
     color: #fff;
     margin: 40px 0 0;
     cursor: pointer;
+  }
+
+  @media screen and (min-width: 500px) {
+    .title {
+      font-size: 80px;
+    }
+    .title-shadow {
+      top: 8px;
+      left: 4px;
+      filter: drop-shadow(2px 8px 0 #000);
+    }
+    .subtitle {
+      font-size: 16px;
+    }
   }
 
   @media screen and (min-width: 1000px) {

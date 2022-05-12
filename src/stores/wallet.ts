@@ -94,7 +94,6 @@ function createWalletStore() {
 
       return;
     }
-
   }
 
   async function connect(provider: string) {
