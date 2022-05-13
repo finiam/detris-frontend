@@ -3,7 +3,7 @@
   import contractStore from "src/stores/contract";
   import walletStore from "src/stores/wallet";
 
-  async function handleClick() {
+  async function handleClick() {    
     if ($walletStore.balance > 0) {
       // show owned nft
       appState.getAddressData();

@@ -12,6 +12,7 @@ function createWalletStore() {
     provider: null as Web3Provider,
     userAddress: null as string,
     balance: 0,
+    chain: null as number,
   });
 
   const { subscribe, set, update } = store;
@@ -49,6 +50,11 @@ function createWalletStore() {
 
   function handleChainChange(chainId: number) {
     console.log("chainChanged", chainId);
+
+    update((store) => ({
+      ...store,
+      chain: chainId,
+    }));
   }
 
   function handleProviderDisconnect(code: number, reason: string) {

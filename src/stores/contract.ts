@@ -2,8 +2,21 @@ import type { JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, ethers } from "ethers";
 import { get, writable } from "svelte/store";
 import walletStore from "./wallet";
+import MerkleTree from "merkletreejs";
+import { keccak256 } from "ethers/lib/utils";
 
 const DETRIS_ABI = [
+  "function balanceOf(address owner) public view returns (uint256 balance)",
+  "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
+  "function tokenURI(uint256 id) public view virtual returns (string memory)",
+];
+
+const EXTENSION_ABI = [
+  "function mint(bytes32[] calldata merkleProof) external payable",
+  "function getMintedTokensAmount() external view returns (uint256)",
+];
+
+/* const DETRIS_ABI = [
   "function balanceOf(address owner) external view returns (uint256 balance)",
   "function safeMint(address to) public",
   "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
@@ -23,19 +36,18 @@ const L2_ABI = [
 const ENDGAME_ABI = [
   "function safeMint(string memory uri) public",
   "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256)",
-];
+]; */
 
-const DETRIS_ADDRESS = import.meta.env.VITE_DETRIS_ADDRESS as string;
-const L1_ADDRESS = import.meta.env.VITE_L1_ADDRESS as string;
+const DETRIS_ADDRESS = import.meta.env.VITE_DETRIS_CONTRACT as string;
+const EXTENSION_ADDRESS = import.meta.env.VITE_EXTENSION_CONTRACT as string;
+/* const L1_ADDRESS = import.meta.env.VITE_L1_ADDRESS as string;
 const L2_ADDRESS = import.meta.env.VITE_L2_ADDRESS as string;
-const ENDGAME_ADDRESS = import.meta.env.VITE_ENDGAME_ADDRESS as string;
+const ENDGAME_ADDRESS = import.meta.env.VITE_ENDGAME_ADDRESS as string; */
 
 function buildContractsStore() {
   const contractStore = writable({
-    detrisContract: null as Contract,
-    l1Contract: null as Contract,
-    l2Contract: null as Contract,
-    endGameContract: null as Contract,
+    baseContract: null as Contract,
+    extensionContract: null as Contract,
     signer: null as JsonRpcSigner,
     signerAddress: null as string,
     message: "",
@@ -44,6 +56,58 @@ function buildContractsStore() {
   const { update, subscribe } = contractStore;
 
   async function buildContract(signer: JsonRpcSigner) {
+    console.log(DETRIS_ADDRESS, EXTENSION_ADDRESS);
+
+    const baseContract = new Contract(DETRIS_ADDRESS, DETRIS_ABI, signer);
+
+    const extensionContract = new Contract(
+      EXTENSION_ADDRESS,
+      EXTENSION_ABI,
+      signer
+    );
+
+    let signerAddress = await signer.getAddress();
+
+    update(() => ({
+      baseContract,
+      extensionContract,
+      signer,
+      signerAddress,
+      message: "",
+    }));
+  }
+
+  async function balanceOf() {
+    const { baseContract, extensionContract, signerAddress } =
+      get(contractStore);
+
+    let res = await baseContract.balanceOf(signerAddress);
+
+    let res2 = await extensionContract.getMintedTokensAmount();
+
+    console.log(res);
+    console.log(res2);
+
+    return Number(ethers.utils.formatEther(res));
+  }
+
+  async function safeMint() {
+    const { baseContract, extensionContract, signerAddress } =
+      get(contractStore);
+
+    const leaves = [keccak256(signerAddress)];
+    const tree = new MerkleTree(leaves, keccak256);
+
+    walletStore.setLoading(true);
+
+    let tx = (await extensionContract.mint(tree.getHexRoot(), {
+      value: ethers.utils.parseEther("0"),
+    })) as ethers.providers.TransactionResponse;
+
+    await tx.wait();
+  }
+
+  /* async function buildContract(signer: JsonRpcSigner) {
     const detrisContract = new Contract(DETRIS_ADDRESS, DETRIS_ABI, signer);
     const l1Contract = new Contract(L1_ADDRESS, L1_ABI, signer);
     const l2Contract = new Contract(L2_ADDRESS, L2_ABI, signer);
@@ -157,18 +221,13 @@ function buildContractsStore() {
     }));
 
     walletStore.setLoading(false);
-  }
+  } */
 
   return {
+    subscribe,
     buildContract,
     balanceOf,
     safeMint,
-    tokenOfOwnerByIndex,
-    tokenURI,
-    bridgeToken,
-    subscribe,
-    getTokenFromL2,
-    mintGameState,
   };
 }
 
