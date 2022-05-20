@@ -3,6 +3,7 @@ import { get, writable } from "svelte/store";
 import metamaskStore from "./metamask";
 import contractStore from "./contract";
 import walletConnectStore from "./walletConnect";
+import appState from "./appState";
 
 function createWalletStore() {
   const store = writable({
@@ -11,7 +12,8 @@ function createWalletStore() {
     signer: null as JsonRpcSigner,
     provider: null as Web3Provider,
     userAddress: null as string,
-    balance: 0,
+    balance: null as number,
+    chain: null as number,
   });
 
   const { subscribe, set, update } = store;
@@ -23,15 +25,20 @@ function createWalletStore() {
     }));
   }
 
-  function init(data) {
+  async function init(data) {  
+    await contractStore.buildContracts(data.signer);
+
+    const balance = await contractStore.getBalance();
+
+    appState.getTokendata();
+
     update((store) => ({
       ...store,
       ...data,
+      balance,
       connected: true,
     }));
-
-    initContract();
-  }
+  }  
 
   function handleAccountChange(data: string[]) {
     console.log("accountsChanged", data);
@@ -49,6 +56,11 @@ function createWalletStore() {
 
   function handleChainChange(chainId: number) {
     console.log("chainChanged", chainId);
+
+    update((store) => ({
+      ...store,
+      chain: chainId,
+    }));
   }
 
   function handleProviderDisconnect(code: number, reason: string) {
@@ -58,23 +70,6 @@ function createWalletStore() {
       ...store,
       userAddress: null,
       connected: false,
-    }));
-  }
-
-  async function initContract() {
-    const { signer } = get(store);
-
-    await contractStore.buildContract(signer);
-
-    updateBalance();
-  }
-
-  async function updateBalance() {
-    let balance = await contractStore.balanceOf();
-
-    update((store) => ({
-      ...store,
-      balance,
     }));
   }
 
@@ -121,7 +116,6 @@ function createWalletStore() {
     checkIfConnected,
     connect,
     setLoading,
-    updateBalance,
     handleAccountChange,
     handleChainChange,
     handleProviderDisconnect,

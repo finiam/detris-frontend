@@ -4,12 +4,10 @@
   import walletStore from "src/stores/wallet";
 
   async function handleClick() {
-    if ($walletStore.balance > 0) {
-      // show owned nft
-      appState.getAddressData();
-    } else {
-      //mint
-      await contractStore.safeMint();
+    if ($appState.tokenId) {
+      appState.play();
+    } else {      
+      await contractStore.mint();
     }
   }
 </script>
