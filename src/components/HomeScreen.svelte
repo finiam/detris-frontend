@@ -5,15 +5,19 @@
   import CtaButton from "./CtaButton.svelte";
   import Connect from "./Connect.svelte";
   import InfoModal from "./InfoModal.svelte";
+  import appState from "src/stores/appState";
+  import BlockShapes from "./BlockShapes.svelte";
 
   let showModal = false;
+
+  $: minting = $appState.state === "minting";
 
   function toggleModal() {
     showModal = !showModal;
   }
 </script>
 
-<main>
+<main class:moveUp={minting}>
   <div class="title-wrap">
     <h1 class="title title-shadow">DETRIS</h1>
     <h1 class="title title-main">DETRIS</h1>
@@ -49,6 +53,10 @@
   </div>
 </main>
 
+<section class="block-loader" class:moveCentre={minting}>
+  <BlockShapes minting={minting} />
+</section>
+
 <style>
   main {
     display: flex;
@@ -65,8 +73,23 @@
     background-color: var(--dark-blue);
     border-radius: 20px 10px 50px 50px;
     box-shadow: inset 10px 10px 0 -5px #fff, inset -2px -2px 0 3px #fff;
+    transition: transform 0.8s ease;
 
     animation: glow 4s ease infinite alternate-reverse;
+  }
+  .block-loader {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    transform: translateY(200%);
+
+    transition: transform 0.8s ease;
+  }
+  .moveUp {
+    transform: translateY(-200%);
+  }
+  .moveCentre {
+    transform: translateY(0);
   }
   .title-wrap {
     position: relative;

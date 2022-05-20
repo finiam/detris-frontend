@@ -25,7 +25,7 @@ const colors = {
   },
 };
 
-let blockSize = 50;
+let blockSize = 70;
 let blockOffset = blockSize + 5;
 
 const randomNegativeOrPositive = (max: number) =>

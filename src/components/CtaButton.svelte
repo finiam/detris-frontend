@@ -5,16 +5,10 @@
   import FancyLoader from "./FancyLoader.svelte";
 
   async function handleClick() {
-    if ($appState.tokenId) {
-      appState.play();
+    if ($walletStore.balance) {
+      appState.setState("playing");
     } else {
-      walletStore.setLoading(true);
-
-      await contractStore.mint();
-
-      walletStore.setLoading(false);
-
-      appState.getTokendata();
+      appState.handleMint();
     }
   }
 </script>

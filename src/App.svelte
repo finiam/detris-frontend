@@ -19,7 +19,7 @@
   });
 </script>
 
-{#if $appState.state === "home"}
+{#if $appState.state === "home" || $appState.state === "minting"}
   <HomeScreen />
 {:else}
   <GameScreen />
