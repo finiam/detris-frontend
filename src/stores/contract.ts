@@ -49,7 +49,7 @@ function buildContractsStore() {
   async function getBalance() {
     const { baseContract, signerAddress } = get(store);
 
-    let tx = await baseContract.balanceOf(signerAddress);
+    let tx = await baseContract.balanceOf(signerAddress);    
 
     return BigNumber.from(await tx).toNumber();
   }
@@ -57,7 +57,7 @@ function buildContractsStore() {
   async function getTokenId() {
     // TODO: get token by address
 
-    return 1;
+    return null;
   }
 
   async function getTokenURI(id: number) {

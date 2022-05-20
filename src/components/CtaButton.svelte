@@ -2,25 +2,30 @@
   import appState from "src/stores/appState";
   import contractStore from "src/stores/contract";
   import walletStore from "src/stores/wallet";
+  import FancyLoader from "./FancyLoader.svelte";
 
   async function handleClick() {
     if ($appState.tokenId) {
       appState.play();
-    } else {      
+    } else {
+      walletStore.setLoading(true);
+
       await contractStore.mint();
+
+      walletStore.setLoading(false);
     }
   }
 </script>
 
-<button
-  class="button"
-  type="button"
-  on:click={handleClick}
-  disabled={$walletStore.loading}
->
-  {#if $walletStore.loading}
-    LOADING...
-  {:else}
+{#if $walletStore.loading}
+  <FancyLoader message="Minting your game" />
+{:else}
+  <button
+    class="button"
+    type="button"
+    on:click={handleClick}
+    disabled={$walletStore.loading}
+  >
     {#if $walletStore.connected && !$walletStore.balance}
       MINT TO PLAY
     {/if}
@@ -28,9 +33,8 @@
     {#if $walletStore.connected && $walletStore.balance}
       PLAY YOUR NFT
     {/if}
-  {/if}
-</button>
-<p class="message">{$contractStore.message}</p>
+  </button>
+{/if}
 
 <style>
   .button {
@@ -48,9 +52,6 @@
   }
   .button:hover {
     transform: scale(1.05);
-  }
-  .message {
-    color: #fff;
   }
 
   @media screen and (min-width: 500px) {

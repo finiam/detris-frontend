@@ -7,7 +7,7 @@ import appState from "./appState";
 
 function createWalletStore() {
   const store = writable({
-    loading: false,
+    loading: true,
     connected: false,
     signer: null as JsonRpcSigner,
     provider: null as Web3Provider,
@@ -25,10 +25,12 @@ function createWalletStore() {
     }));
   }
 
-  async function init(data) {  
+  async function init(data) {
     await contractStore.buildContracts(data.signer);
 
     const balance = await contractStore.getBalance();
+
+    console.log(balance)
 
     appState.getTokendata();
 
@@ -38,7 +40,9 @@ function createWalletStore() {
       balance,
       connected: true,
     }));
-  }  
+
+    setLoading(false);
+  }
 
   function handleAccountChange(data: string[]) {
     console.log("accountsChanged", data);
@@ -89,9 +93,13 @@ function createWalletStore() {
 
       return;
     }
+
+    setLoading(false);
   }
 
   async function connect(provider: string) {
+    setLoading(true);
+
     switch (provider) {
       case "metamask":
         const metamaskUser = await metamaskStore.connect(true);
