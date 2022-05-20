@@ -18,10 +18,10 @@
   });
 </script>
 
-{#if $appState.tokenId !== null}
-  <GameScreen />
-{:else}
+{#if $appState.state === "home"}
   <HomeScreen />
+{:else}
+  <GameScreen />
 {/if}
 <div />
 

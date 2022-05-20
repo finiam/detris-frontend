@@ -2,8 +2,16 @@ import { writable } from "svelte/store";
 import contractStore from "./contract";
 import walletStore from "./wallet";
 
+interface AppState {
+  state: "home" | "playing";
+  tokenId: number;
+  tokenURI: string;
+  iframeSrc: string;
+}
+
 function createAppState() {
-  const store = writable({
+  const store = writable<AppState>({
+    state: "home",
     tokenId: null,
     tokenURI: null,
     iframeSrc: null,
@@ -11,30 +19,46 @@ function createAppState() {
 
   const { subscribe, update } = store;
 
-  async function getAddressData() {
+  async function getTokendata() {
     walletStore.setLoading(true);
 
-    let { tokenURI, tokenId } = await contractStore.getTokenFromL2();
-    console.log(tokenURI);
+    const tokenId = await contractStore.getTokenId();
+    const tokenURI = await contractStore.getTokenURI(tokenId);
+    const iframeSrc = await getAnimationURL(tokenURI);
 
-    let metadataReq = await fetch(tokenURI);
+    getAnimationURL(tokenURI);
 
-    let metadata = await metadataReq.json();
-
-    console.log(tokenId);
-
-    update(() => ({
+    update((store) => ({
+      ...store,
       tokenId,
       tokenURI,
-      iframeSrc: metadata.animation_url,
+      iframeSrc,
     }));
 
     walletStore.setLoading(false);
   }
 
+  async function getAnimationURL(uri: string) {
+    if (!uri) return null;
+
+    let metadataReq = await fetch(uri);
+
+    let metadata = await metadataReq.json();
+
+    return metadata?.animation_url;
+  }
+
+  function play() {
+    update((store) => ({
+      ...store,
+      state: "playing",
+    }));
+  }
+
   return {
     subscribe,
-    getAddressData,
+    getTokendata,
+    play,
   };
 }
 
