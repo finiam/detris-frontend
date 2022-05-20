@@ -7,7 +7,7 @@ import appState from "./appState";
 
 function createWalletStore() {
   const store = writable({
-    loading: false,
+    loading: true,
     connected: false,
     signer: null as JsonRpcSigner,
     provider: null as Web3Provider,
@@ -25,20 +25,30 @@ function createWalletStore() {
     }));
   }
 
-  async function init(data) {  
+  async function init(data) {
     await contractStore.buildContracts(data.signer);
 
-    const balance = await contractStore.getBalance();
+    updateBalance();
 
     appState.getTokendata();
 
     update((store) => ({
       ...store,
       ...data,
-      balance,
       connected: true,
     }));
-  }  
+
+    setLoading(false);
+  }
+
+  async function updateBalance() {
+    const balance = await contractStore.getBalance();
+
+    update((store) => ({
+      ...store,
+      balance,
+    }));
+  }
 
   function handleAccountChange(data: string[]) {
     console.log("accountsChanged", data);
@@ -89,25 +99,33 @@ function createWalletStore() {
 
       return;
     }
+
+    setLoading(false);
   }
 
   async function connect(provider: string) {
-    switch (provider) {
-      case "metamask":
-        const metamaskUser = await metamaskStore.connect(true);
+    setLoading(true);
 
-        if (metamaskUser) {
-          init(metamaskUser);
-        }
+    try {
+      switch (provider) {
+        case "metamask":
+          const metamaskUser = await metamaskStore.connect(true);
 
-        break;
+          if (metamaskUser) {
+            init(metamaskUser);
+          }
 
-      case "walletConnect":
-        const walletConnectUser = await walletConnectStore.connect();
+          break;
 
-        init(walletConnectUser);
+        case "walletConnect":
+          const walletConnectUser = await walletConnectStore.connect();
 
-        break;
+          init(walletConnectUser);
+
+          break;
+      }
+    } catch {
+      setLoading(false);
     }
   }
 
