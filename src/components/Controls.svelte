@@ -22,12 +22,12 @@
   .keycap {
     position: relative;
     margin: 5px;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     font-family: var(--sans-font);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 24px;
     color: #fff;
     background: #000;
     border: 2px solid #fff;

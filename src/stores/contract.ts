@@ -57,7 +57,7 @@ function buildContractsStore() {
   async function getTokenId() {
     // TODO: get token by address
 
-    return null;
+    return 1;
   }
 
   async function getTokenURI(id: number) {
