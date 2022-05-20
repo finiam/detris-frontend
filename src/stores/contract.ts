@@ -1,9 +1,6 @@
 import type { JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, ethers } from "ethers";
 import { get, writable } from "svelte/store";
-import walletStore from "./wallet";
-import MerkleTree from "merkletreejs";
-import { keccak256 } from "ethers/lib/utils";
 
 const DETRIS_ABI = [
   "function tokenURI(uint256 tokenId) public view virtual returns (string memory)",

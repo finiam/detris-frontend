@@ -26,7 +26,6 @@
     "@metamask/providers": "^8.1.1",
     "@walletconnect/web3-provider": "^1.7.8",
     "ethers": "^5.6.4",
-    "merkletreejs": "^0.2.31",
     "rollup-plugin-node-polyfills": "^0.2.1"
   }
 }
