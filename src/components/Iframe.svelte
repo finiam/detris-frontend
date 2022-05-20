@@ -1,27 +1,38 @@
 <script lang="ts">
   import appState from "src/stores/appState";
+  import { onMount } from "svelte";
+
+  let canvasEl: HTMLIFrameElement;
+
+  onMount(() => {
+    setTimeout(() => {
+      canvasEl.contentWindow.focus();
+    }, 100);
+  });
 </script>
 
 <div class="wrapper">
-  <iframe id="game-frame" title="Detris" src={$appState.iframeSrc} />
+  <iframe
+    bind:this={canvasEl}
+    id="game-frame"
+    title="Detris"
+    src={$appState.iframeSrc}
+  />
 </div>
 
 <style>
   .wrapper {
     position: relative;
-    width: 327px;
-    height: 783px;
-    max-height: 90vh;
+    height: 100%;
+    max-height: 100vh;
     margin: auto;
   }
   iframe {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    margin: auto;
     width: 100%;
-    height: 100%;
+    height: 90%;
     border: 0;
-
-    filter: drop-shadow(2px 2px 2px #000000dd);
   }
 </style>
