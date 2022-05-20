@@ -1,19 +1,14 @@
 <script lang="ts">
   import appState from "src/stores/appState";
-  import { onMount } from "svelte";
 
-  let canvasEl: HTMLIFrameElement;
-
-  onMount(() => {
-    setTimeout(() => {
-      canvasEl.contentWindow.focus();
-    }, 100);
-  });
+  function focusIframe(element) {
+    element.target.focus();
+  }
 </script>
 
 <div class="wrapper">
   <iframe
-    bind:this={canvasEl}
+    on:load={focusIframe}
     id="game-frame"
     title="Detris"
     src={$appState.iframeSrc}

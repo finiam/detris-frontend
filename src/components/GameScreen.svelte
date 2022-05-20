@@ -1,26 +1,38 @@
 <script>
-  import contractStore from "src/stores/contract";
+  import { ExternalLinkIcon } from "svelte-feather-icons";
   import appState from "src/stores/appState";
   import Iframe from "./Iframe.svelte";
+  import Controls from "./Controls.svelte";
 </script>
 
 <div class="wrapper">
-  <div class="info">
-    <p>Move the pieces with<br /> W A S D</p>
-    <p>
-      <a href={$appState.tokenURI} target="_blank">
-        View NFT metadata on IPFS
-      </a>
-    </p>
-    <p>
-      <a href={$appState.iframeSrc} target="_blank"> Play on IPFS </a>
-    </p>
-    <br />
-  </div>
   <div class="iframe-wrapper">
     <Iframe />
   </div>
-  <div></div>
+  <div class="info-panel">
+    <Controls />
+    <section class="link-section">
+      <a
+        class="link"
+        href={$appState.tokenURI}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <span>View NFT metadata</span>
+        <ExternalLinkIcon size="20" />
+      </a>
+      <a
+        class="link"
+        href={$appState.iframeSrc}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <span> Play on IPFS </span>
+        <ExternalLinkIcon size="20" />
+      </a>
+    </section>
+  </div>
+  <div class="info-panel" />
 </div>
 
 <style>
@@ -30,8 +42,40 @@
     width: 100%;
     height: 100%;
   }
+  .info-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    order: 0;
+  }
+  .info-panel:last-of-type {
+    order: 2;
+  }
+  .link-section {
+    margin-top: auto;
+  }
+  .link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    font-family: var(--sans-font);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: white;
+  }
+  .link span {
+    margin-right: 10px;
+  }
   .iframe-wrapper {
-    flex: 1 0 auto;    
+    flex: 1 0 auto;
+    order: 2;
   }
 
+  @media screen and (min-width: 1400px) {
+    .info-panel {
+      padding: 60px;
+    }
+  }
 </style>
