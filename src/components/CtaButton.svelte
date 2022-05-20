@@ -13,6 +13,8 @@
       await contractStore.mint();
 
       walletStore.setLoading(false);
+
+      appState.getTokendata();
     }
   }
 </script>

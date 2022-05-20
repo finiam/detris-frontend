@@ -28,20 +28,26 @@ function createWalletStore() {
   async function init(data) {
     await contractStore.buildContracts(data.signer);
 
-    const balance = await contractStore.getBalance();
-
-    console.log(balance)
+    updateBalance();
 
     appState.getTokendata();
 
     update((store) => ({
       ...store,
       ...data,
-      balance,
       connected: true,
     }));
 
     setLoading(false);
+  }
+
+  async function updateBalance() {
+    const balance = await contractStore.getBalance();
+
+    update((store) => ({
+      ...store,
+      balance,
+    }));
   }
 
   function handleAccountChange(data: string[]) {
@@ -100,22 +106,26 @@ function createWalletStore() {
   async function connect(provider: string) {
     setLoading(true);
 
-    switch (provider) {
-      case "metamask":
-        const metamaskUser = await metamaskStore.connect(true);
+    try {
+      switch (provider) {
+        case "metamask":
+          const metamaskUser = await metamaskStore.connect(true);
 
-        if (metamaskUser) {
-          init(metamaskUser);
-        }
+          if (metamaskUser) {
+            init(metamaskUser);
+          }
 
-        break;
+          break;
 
-      case "walletConnect":
-        const walletConnectUser = await walletConnectStore.connect();
+        case "walletConnect":
+          const walletConnectUser = await walletConnectStore.connect();
 
-        init(walletConnectUser);
+          init(walletConnectUser);
 
-        break;
+          break;
+      }
+    } catch {
+      setLoading(false);
     }
   }
 
