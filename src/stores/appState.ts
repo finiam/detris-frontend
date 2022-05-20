@@ -22,11 +22,11 @@ function createAppState() {
   async function getTokendata() {
     walletStore.setLoading(true);
 
+    console.log("getting contract data");
+
     const tokenId = await contractStore.getTokenId();
     const tokenURI = await contractStore.getTokenURI(tokenId);
     const iframeSrc = await getAnimationURL(tokenURI);
-
-    getAnimationURL(tokenURI);
 
     update((store) => ({
       ...store,
