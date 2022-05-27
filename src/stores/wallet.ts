@@ -36,8 +36,6 @@ function createWalletStore() {
     signer: JsonRpcSigner;
     userAddress: string;
   }) {
-    console.log(data);
-
     await contractStore.buildContracts(data.signer);
 
     await updateBalance();
