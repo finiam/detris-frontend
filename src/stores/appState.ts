@@ -2,8 +2,10 @@ import { writable } from "svelte/store";
 import contractStore from "./contract";
 import walletStore from "./wallet";
 
+type GameState = "home" | "minting" | "playing";
+
 interface AppState {
-  state: "home" | "playing";
+  state: GameState;
   tokenId: number;
   tokenURI: string;
   iframeSrc: string;
@@ -20,8 +22,6 @@ function createAppState() {
   const { subscribe, update } = store;
 
   async function getTokendata() {
-    walletStore.setLoading(true);
-
     const tokenId = await contractStore.getTokenId();
     const tokenURI = await contractStore.getTokenURI(tokenId);
     const iframeSrc = await getAnimationURL(tokenURI);
@@ -46,17 +46,31 @@ function createAppState() {
     return metadata?.animation_url;
   }
 
-  function play() {
+  function setState(state: GameState) {
     update((store) => ({
       ...store,
-      state: "playing",
+      state,
     }));
+  }
+
+  async function handleMint() {
+    try {
+      appState.setState("minting");
+      await contractStore.mint();
+
+      await appState.getTokendata();
+
+      appState.setState("playing");
+    } catch {
+      appState.setState("home");
+    }
   }
 
   return {
     subscribe,
     getTokendata,
-    play,
+    setState,
+    handleMint,
   };
 }
 

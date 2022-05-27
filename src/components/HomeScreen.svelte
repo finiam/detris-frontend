@@ -1,19 +1,22 @@
 <script lang="ts">
   import walletStore from "src/stores/wallet";
-  import FallingBlock from "src/components/FallingBlock.svelte";
-  import Grain from "src/components/Grain.svelte";
   import CtaButton from "./CtaButton.svelte";
   import Connect from "./Connect.svelte";
   import InfoModal from "./InfoModal.svelte";
+  import appState from "src/stores/appState";
+  import BlockShapes from "./BlockShapes.svelte";
+  import HomeScreenBg from "./HomeScreenBg.svelte";
 
   let showModal = false;
+
+  $: minting = $appState.state === "minting";
 
   function toggleModal() {
     showModal = !showModal;
   }
 </script>
 
-<main>
+<main class:moveUp={minting}>
   <div class="title-wrap">
     <h1 class="title title-shadow">DETRIS</h1>
     <h1 class="title title-main">DETRIS</h1>
@@ -39,15 +42,10 @@
     <InfoModal close={toggleModal} />
   {/if}
 
-  <div class="bg">
-    {#each { length: 7 } as _, index}
-      <FallingBlock {index} />
-    {/each}
-    {#each { length: 12 } as _, index}
-      <Grain />
-    {/each}
-  </div>
+  <HomeScreenBg />
 </main>
+
+<BlockShapes {minting} />
 
 <style>
   main {
@@ -65,8 +63,15 @@
     background-color: var(--dark-blue);
     border-radius: 20px 10px 50px 50px;
     box-shadow: inset 10px 10px 0 -5px #fff, inset -2px -2px 0 3px #fff;
+    transition: transform 0.8s ease;
 
     animation: glow 4s ease infinite alternate-reverse;
+  }
+  .moveUp {
+    transform: translateY(-200%);
+  }
+  .moveCentre {
+    transform: translateY(0);
   }
   .title-wrap {
     position: relative;
@@ -111,10 +116,7 @@
     line-height: 1.4;
     max-width: 90%;
   }
-  .bg {
-    z-index: -1;
-    pointer-events: none;
-  }
+
   .info-btn {
     text-decoration: underline;
     border: 0;
