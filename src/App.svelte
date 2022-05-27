@@ -3,7 +3,6 @@
   import GameScreen from "src/components/GameScreen.svelte";
   import HomeScreen from "src/components/HomeScreen.svelte";
   import appState from "src/stores/appState";
-  import BlockShapes from "./components/BlockShapes.svelte";
 
   onMount(() => {
     let index = Math.floor(Math.random() * 7);
