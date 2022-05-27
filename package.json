@@ -30,6 +30,7 @@
     "normalize.css": "^8.0.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "svelte-feather-icons": "^4.0.0",
+    "svelte-navigator": "^3.1.5",
     "zdog": "^1.1.3"
   }
 }
