@@ -4,7 +4,7 @@ import metamaskStore from "./metamask";
 import contractStore from "./contract";
 import walletConnectStore from "./walletConnect";
 import appState from "./appState";
-import type { providers } from "ethers";
+import { BigNumber, providers } from "ethers";
 
 const WALLETS = {
   metamask: metamaskStore,
@@ -36,6 +36,8 @@ function createWalletStore() {
     signer: JsonRpcSigner;
     userAddress: string;
   }) {
+    console.log(data);
+
     await contractStore.buildContracts(data.signer);
 
     await updateBalance();
@@ -48,24 +50,31 @@ function createWalletStore() {
       connected: true,
     }));
 
-    /* checkChain(); */
+    await checkChainId();
 
     setLoading(false);
   }
 
-  /* async function checkChain() {
+  async function checkChainId() {
     const { provider } = get(store);
-
-    provider.network.chainId;
-  } */
-
-  async function updateBalance() {
-    const balance = await contractStore.getBalance();
 
     update((store) => ({
       ...store,
-      balance,
+      chain: provider.network.chainId,
     }));
+  }
+
+  async function updateBalance() {
+    try {
+      const balance = await contractStore.getBalance();
+
+      update((store) => ({
+        ...store,
+        balance,
+      }));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   function handleAccountChange(data: string[]) {
@@ -87,7 +96,7 @@ function createWalletStore() {
 
     update((store) => ({
       ...store,
-      chain: chainId,
+      chain: BigNumber.from(chainId).toNumber(),
     }));
   }
 
@@ -105,19 +114,23 @@ function createWalletStore() {
     const walletKeys = Object.keys(WALLETS);
 
     for (let i = 0; i < walletKeys.length; i++) {
-      const user = await connect(walletKeys[i], false);
+      const user = await WALLETS[walletKeys[i]].init();
 
-      if (user) break;
+      if (user) {
+        init(user);
+
+        break;
+      }
     }
 
     setLoading(false);
   }
 
-  async function connect(provider: string, showPrompt: boolean) {
+  async function connect(provider: string) {
     setLoading(true);
 
     try {
-      const user = await WALLETS[provider].connect(showPrompt);
+      const user = await WALLETS[provider].connect(true);
 
       await init(user);
 

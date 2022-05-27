@@ -12,13 +12,13 @@
       type="button"
       data-type="button"
       on:click={() => {
-        walletStore.connect("metamask", true);
+        walletStore.connect("metamask");
       }}>METAMASK</Button
     >
     <Button
       type="button"
       on:click={() => {
-        walletStore.connect("walletConnect", true);
+        walletStore.connect("walletConnect");
       }}>WALLET CONNECT</Button
     >
   {/if}
