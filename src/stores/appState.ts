@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 import contractStore from "./contract";
 import walletStore from "./wallet";
 
-type GameState = "home" | "minting" | "playing";
+type GameState = "home" | "minting" | "playing" | "finished";
 
 interface AppState {
   state: GameState;

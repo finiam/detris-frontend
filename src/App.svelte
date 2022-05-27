@@ -4,18 +4,12 @@
   import HomeScreen from "src/components/HomeScreen.svelte";
   import appState from "src/stores/appState";
   import ChainWarning from "./components/ChainWarning.svelte";
+  import setFavicon from "./lib/setFavicon";
+  import { addMessageListener } from "./lib/messageUtils";
 
   onMount(() => {
-    let index = Math.floor(Math.random() * 7);
-
-    let link: HTMLLinkElement =
-      document.querySelector("link[rel*='icon']") ||
-      document.createElement("link");
-    link.type = "image/x-icon";
-    link.rel = "shortcut icon";
-    link.href = `${window.location.href}images/favicons/favicon_${index}.ico`;
-
-    document.getElementsByTagName("head")[0].appendChild(link);
+    setFavicon();
+    addMessageListener();
   });
 </script>
 

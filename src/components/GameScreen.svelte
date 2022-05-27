@@ -32,7 +32,11 @@
       </a>
     </section>
   </div>
-  <div class="info-panel" />
+  <div class="info-panel">
+    {#if $appState.state === "finished"}
+      <p style="color: #fff">Game ended, mint the endgame</p>
+    {/if}
+  </div>
 </div>
 
 <style>
