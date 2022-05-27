@@ -8,7 +8,7 @@ function addMessageListener() {
 
     if (event.data === "finished") {
       setState("finished");
-    } else if (event.data === "playing") {
+    } else if (event.data === "started") {
       setState("playing");
     }
   });
