@@ -1,12 +1,11 @@
 <script lang="ts">
   import walletStore from "src/stores/wallet";
-  import FallingBlock from "src/components/FallingBlock.svelte";
-  import Grain from "src/components/Grain.svelte";
   import CtaButton from "./CtaButton.svelte";
   import Connect from "./Connect.svelte";
   import InfoModal from "./InfoModal.svelte";
   import appState from "src/stores/appState";
   import BlockShapes from "./BlockShapes.svelte";
+  import HomeScreenBg from "./HomeScreenBg.svelte";
 
   let showModal = false;
 
@@ -43,19 +42,10 @@
     <InfoModal close={toggleModal} />
   {/if}
 
-  <div class="bg">
-    {#each { length: 7 } as _, index}
-      <FallingBlock {index} />
-    {/each}
-    {#each { length: 12 } as _, index}
-      <Grain />
-    {/each}
-  </div>
+  <HomeScreenBg />
 </main>
 
-<section class="block-loader" class:moveCentre={minting}>
-  <BlockShapes minting={minting} />
-</section>
+<BlockShapes {minting} />
 
 <style>
   main {
@@ -76,14 +66,6 @@
     transition: transform 0.8s ease;
 
     animation: glow 4s ease infinite alternate-reverse;
-  }
-  .block-loader {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    transform: translateY(200%);
-
-    transition: transform 0.8s ease;
   }
   .moveUp {
     transform: translateY(-200%);
@@ -134,10 +116,7 @@
     line-height: 1.4;
     max-width: 90%;
   }
-  .bg {
-    z-index: -1;
-    pointer-events: none;
-  }
+
   .info-btn {
     text-decoration: underline;
     border: 0;
