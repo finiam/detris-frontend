@@ -2,18 +2,12 @@
   import walletStore from "src/stores/wallet";
   import CtaButton from "./CtaButton.svelte";
   import Connect from "./Connect.svelte";
-  import InfoModal from "./InfoModal.svelte";
   import appState from "src/stores/appState";
   import BlockShapes from "./BlockShapes.svelte";
   import HomeScreenBg from "./HomeScreenBg.svelte";
-
-  let showModal = false;
+  import { link } from "svelte-navigator";
 
   $: minting = $appState.state === "minting";
-
-  function toggleModal() {
-    showModal = !showModal;
-  }
 </script>
 
 <main class:moveUp={minting}>
@@ -34,13 +28,7 @@
     <Connect />
   {/if}
 
-  <button type="button" class="info-btn" on:click={toggleModal}
-    >How does it work?</button
-  >
-
-  {#if showModal}
-    <InfoModal close={toggleModal} />
-  {/if}
+  <a class="info-btn" href="/about" use:link>About</a>
 
   <HomeScreenBg />
 </main>
@@ -69,9 +57,6 @@
   }
   .moveUp {
     transform: translateY(-200%);
-  }
-  .moveCentre {
-    transform: translateY(0);
   }
   .title-wrap {
     position: relative;

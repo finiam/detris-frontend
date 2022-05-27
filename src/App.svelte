@@ -1,11 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { Router, Route, Link } from "svelte-navigator";
   import GameScreen from "src/components/GameScreen.svelte";
   import HomeScreen from "src/components/HomeScreen.svelte";
   import appState from "src/stores/appState";
   import ChainWarning from "./components/ChainWarning.svelte";
   import setFavicon from "./lib/setFavicon";
   import { addMessageListener } from "./lib/messageUtils";
+  import About from "./components/About.svelte";
 
   onMount(() => {
     setFavicon();
@@ -13,13 +15,22 @@
   });
 </script>
 
-<ChainWarning />
-{#if $appState.state === "home" || $appState.state === "minting"}
-  <HomeScreen />
-{:else}
-  <GameScreen />
-{/if}
-<div />
+<Router>
+  <ChainWarning />
+
+  <Route path="/">
+    {#if $appState.state === "home" || $appState.state === "minting"}
+      <HomeScreen />
+    {:else}
+      <GameScreen />
+    {/if}
+  </Route>
+
+  <Route path="/about">
+    <About />
+  </Route>
+  <div />
+</Router>
 
 <style>
   div {
