@@ -9,6 +9,7 @@
     <FancyLoader message="Connecting" />
   {:else}
     <Button
+      disabled={!$walletStore.chainOk}
       type="button"
       data-type="button"
       on:click={() => {
@@ -16,6 +17,7 @@
       }}>METAMASK</Button
     >
     <Button
+      disabled={!$walletStore.chainOk}
       type="button"
       on:click={() => {
         walletStore.connect("walletConnect");
