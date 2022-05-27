@@ -4,6 +4,12 @@ import metamaskStore from "./metamask";
 import contractStore from "./contract";
 import walletConnectStore from "./walletConnect";
 import appState from "./appState";
+import { BigNumber, providers } from "ethers";
+
+const WALLETS = {
+  metamask: metamaskStore,
+  walletConnect: walletConnectStore,
+};
 
 function createWalletStore() {
   const store = writable({
@@ -25,12 +31,16 @@ function createWalletStore() {
     }));
   }
 
-  async function init(data) {
+  async function init(data: {
+    provider: providers.Web3Provider;
+    signer: JsonRpcSigner;
+    userAddress: string;
+  }) {
     await contractStore.buildContracts(data.signer);
 
-    updateBalance();
+    await updateBalance();
 
-    appState.getTokendata();
+    await appState.getTokendata();
 
     update((store) => ({
       ...store,
@@ -38,16 +48,31 @@ function createWalletStore() {
       connected: true,
     }));
 
+    await checkChainId();
+
     setLoading(false);
   }
 
-  async function updateBalance() {
-    const balance = await contractStore.getBalance();
+  async function checkChainId() {
+    const { provider } = get(store);
 
     update((store) => ({
       ...store,
-      balance,
+      chain: provider.network.chainId,
     }));
+  }
+
+  async function updateBalance() {
+    try {
+      const balance = await contractStore.getBalance();
+
+      update((store) => ({
+        ...store,
+        balance,
+      }));
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   function handleAccountChange(data: string[]) {
@@ -69,7 +94,7 @@ function createWalletStore() {
 
     update((store) => ({
       ...store,
-      chain: chainId,
+      chain: BigNumber.from(chainId).toNumber(),
     }));
   }
 
@@ -83,21 +108,17 @@ function createWalletStore() {
     }));
   }
 
-  async function checkIfConnected() {
-    const metamaskUser = await metamaskStore.init();
+  async function autoConnect() {
+    const walletKeys = Object.keys(WALLETS);
 
-    if (metamaskUser) {
-      init(metamaskUser);
+    for (let i = 0; i < walletKeys.length; i++) {
+      const user = await WALLETS[walletKeys[i]].init();
 
-      return;
-    }
+      if (user) {
+        init(user);
 
-    const walletConnectUser = await walletConnectStore.init();
-
-    if (walletConnectUser) {
-      init(walletConnectUser);
-
-      return;
+        break;
+      }
     }
 
     setLoading(false);
@@ -107,31 +128,21 @@ function createWalletStore() {
     setLoading(true);
 
     try {
-      switch (provider) {
-        case "metamask":
-          const metamaskUser = await metamaskStore.connect(true);
+      const user = await WALLETS[provider].connect(true);
 
-          if (metamaskUser) {
-            init(metamaskUser);
-          }
+      await init(user);
 
-          break;
-
-        case "walletConnect":
-          const walletConnectUser = await walletConnectStore.connect();
-
-          init(walletConnectUser);
-
-          break;
-      }
-    } catch {
+      return true;
+    } catch (err) {
+      console.error(err);
+    } finally {
       setLoading(false);
     }
   }
 
   return {
     subscribe,
-    checkIfConnected,
+    autoConnect,
     connect,
     setLoading,
     handleAccountChange,
@@ -142,6 +153,6 @@ function createWalletStore() {
 
 const walletStore = createWalletStore();
 
-walletStore.checkIfConnected();
+walletStore.autoConnect();
 
 export default walletStore;
