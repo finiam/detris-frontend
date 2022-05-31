@@ -20,6 +20,10 @@
   .button:hover {
     transform: scale(1.05);
   }
+  .button:disabled {
+    opacity: 0.8;
+    pointer-events: none;
+  }
 
   @media screen and (min-width: 500px) {
     .button {

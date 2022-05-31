@@ -1,6 +1,5 @@
 <script lang="ts">
   import appState from "src/stores/appState";
-  import contractStore from "src/stores/contract";
   import walletStore from "src/stores/wallet";
   import FancyLoader from "./FancyLoader.svelte";
 
@@ -14,7 +13,7 @@
 </script>
 
 {#if $walletStore.loading}
-  <FancyLoader message="Minting your game" />
+  <FancyLoader message="" />
 {:else}
   <button
     class="button"

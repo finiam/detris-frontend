@@ -5,6 +5,7 @@ import contractStore from "./contract";
 import walletConnectStore from "./walletConnect";
 import appState from "./appState";
 import { BigNumber, providers } from "ethers";
+import { getCorrectChainId } from "src/lib/chainResolver";
 
 const WALLETS = {
   metamask: metamaskStore,
@@ -20,6 +21,7 @@ function createWalletStore() {
     userAddress: null as string,
     balance: null as number,
     chain: null as number,
+    chainOk: true,
   });
 
   const { subscribe, set, update } = store;
@@ -36,11 +38,13 @@ function createWalletStore() {
     signer: JsonRpcSigner;
     userAddress: string;
   }) {
+    await checkChain(data.provider);
+
+    if (!get(store).chainOk) {
+      return;
+    }
+
     await contractStore.buildContracts(data.signer);
-
-    await updateBalance();
-
-    await appState.getTokendata();
 
     update((store) => ({
       ...store,
@@ -48,17 +52,18 @@ function createWalletStore() {
       connected: true,
     }));
 
-    await checkChainId();
+    await updateBalance();
+
+    await appState.getTokendata();
 
     setLoading(false);
   }
 
-  async function checkChainId() {
-    const { provider } = get(store);
-
+  async function checkChain(provider: providers.Web3Provider) {
     update((store) => ({
       ...store,
       chain: provider.network.chainId,
+      chainOk: getCorrectChainId() === provider.network.chainId,
     }));
   }
 
@@ -92,9 +97,12 @@ function createWalletStore() {
   function handleChainChange(chainId: number) {
     console.log("chainChanged", chainId);
 
+    const chainIdAsNumber = BigNumber.from(chainId).toNumber();
+
     update((store) => ({
       ...store,
       chain: BigNumber.from(chainId).toNumber(),
+      chainOk: getCorrectChainId() === chainIdAsNumber,
     }));
   }
 
