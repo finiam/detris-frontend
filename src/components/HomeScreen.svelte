@@ -30,13 +30,14 @@
 
   <a class="info-btn" href="/about" use:link>About</a>
 
-  <HomeScreenBg />
+  <!-- <HomeScreenBg /> -->
 </main>
 
 <BlockShapes {minting} />
 
 <style>
   main {
+    opacity: 0;
     display: flex;
     align-self: center;
     flex-direction: column;
@@ -48,12 +49,12 @@
     max-width: 1200px;
     max-height: 800px;
     overflow: hidden;
-    background-color: var(--dark-blue);
+    /* background-color: var(--dark-blue);
     border-radius: 20px 10px 50px 50px;
-    box-shadow: inset 10px 10px 0 -5px #fff, inset -2px -2px 0 3px #fff;
+    box-shadow: inset 10px 10px 0 -5px #fff, inset -2px -2px 0 3px #fff; */
     transition: transform 0.8s ease;
 
-    animation: glow 4s ease infinite alternate-reverse;
+    /* animation: glow 4s ease infinite alternate-reverse; */
   }
   .moveUp {
     transform: translateY(-200%);

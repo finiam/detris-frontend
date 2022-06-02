@@ -680,10 +680,17 @@
   dependencies:
     "@types/node" "*"
 
-"@types/zdog@^1.1.2":
+"@types/zdog@*", "@types/zdog@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@types/zdog/-/zdog-1.1.2.tgz#f18cb79e4ad5ce69f5c332615e54e87ebb670ebe"
   integrity sha512-E1nINLaVvxu7N66gANMjhlxMdGL9KqsePa7NyO4p96xeQ7YiAjydVH+eE4W2aLdGyIcLqt+pNMK8l7+gD8c+Wg==
+
+"@types/zfont@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@types/zfont/-/zfont-1.2.1.tgz#be765e407cfbd2372c2acec3ebb5fd57d08ad8b3"
+  integrity sha512-SZ9mvVvYdTPdCWuwGRyUwtF1l4gFprFAYIstL/ESonqtaRs3cd9RW8ulgvenNyWScVjjCZPEBWSAS+WMt/jJoA==
+  dependencies:
+    "@types/zdog" "*"
 
 "@walletconnect/browser-utils@^1.7.8":
   version "1.7.8"
@@ -3262,6 +3269,11 @@ typescript@*, typescript@^4.5.4:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.3.tgz#eefeafa6afdd31d725584c67a0eaba80f6fc6c6c"
   integrity sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==
 
+typr.js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typr.js/-/typr.js-1.0.0.tgz#0087fd0cf59d2d1e71a4a16f963c5227c78528e9"
+  integrity sha512-1fcCBnRerF4hLBrNVZyf6OwpWummpKomQ7N7OuWf3qzi4+XNSxtOnn3zvQlSwpV5SW/b0umULr5hQwOUNkZZUg==
+
 uri-js@^4.2.2:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-4.4.1.tgz#9b1a52595225859e55f669d928f88c6c57f2a77e"
@@ -3463,3 +3475,10 @@ zdog@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/zdog/-/zdog-1.1.3.tgz#55dd17a3582a0b74d48f8bfed7b2c2f2602646a9"
   integrity sha512-raRj6r0gPzopFm5XWBJZr/NuV4EEnT4iE+U3dp5FV5pCb588Gmm3zLIp/j9yqqcMiHH8VNQlerLTgOqL7krh6w==
+
+zfont@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/zfont/-/zfont-1.2.8.tgz#dfe82857842cdcf7e07e92d8949d178331ec7fde"
+  integrity sha512-M30+Hi//Eea8ywh11FiR8W1W3ooC89lR4CrjTUzI5x+JTvezw7qN8jQBxFNwbh6okQcv5DG4h0F1ZkXJQROHBA==
+  dependencies:
+    typr.js "^1.0.0"

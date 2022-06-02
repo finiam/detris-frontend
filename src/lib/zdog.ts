@@ -1,4 +1,5 @@
 import Zdog from "zdog";
+import Zfont from "zfont";
 
 type Shapes = "T" | "L" | "I" | "O" | "Z";
 
@@ -31,13 +32,31 @@ let blockOffset = blockSize + 5;
 const randomNegativeOrPositive = (max: number) =>
   Math.ceil(Math.random() * max) * (Math.round(Math.random()) ? 1 : -1);
 
+// Initialize Zfont
+Zfont.init(Zdog);
+
+let viewRotation = new Zdog.Vector();
+let dragStartRX = 0;
+let dragStartRY = 0;
+
+// Set up a font to use
+let myFont = new Zdog.Font({
+  src: "./fonts/PressStart2P-Regular.ttf",
+});
+
 export class ShapeAnimation {
   illo = null as Zdog.Illustration;
+  text = null;
+
   spinning = true;
   anchors: {
     anchor: Zdog.Anchor;
     speed: number;
   }[] = [];
+
+  /* initialPosition = {
+
+  } */
 
   constructor(className: string) {
     this.illo = new Zdog.Illustration({
@@ -46,9 +65,27 @@ export class ShapeAnimation {
       onDragStart: () => {
         this.spinning = false;
       },
+      onDragMove: (pointer, moveX, moveY) => {
+        let moveRX = (moveY / this.illo.width) * Zdog.TAU * -1;
+        let moveRY = (moveX / this.illo.width) * Zdog.TAU * -1;
+        viewRotation.x = moveRX;
+        viewRotation.y = moveRY;
+      },
       onDragEnd: () => {
         this.spinning = true;
       },
+    });
+
+    // Create a text object
+    // This is just a Zdog.Shape object with a couple of extra parameters!
+    this.text = new Zdog.Text({
+      addTo: this.illo,
+      font: myFont,
+      value: "DETRIS",
+      fontSize: 64,
+      color: "#fff",
+      fill: true,
+      textAlign: "center",
     });
   }
 
@@ -228,6 +265,20 @@ export class ShapeAnimation {
     }
 
     this.illo.updateRenderGraph();
+
+    //console.log(this.illo.rotate)
+
+    if (!this.spinning) {
+      /* this.text.rotate.x = this.illo.rotate.x * -1;
+      this.text.rotate.y = this.illo.rotate.y * -1;
+      this.text.rotate.z = this.illo.rotate.z * -1; */
+
+      this.text.rotate.x = this.illo.rotate.x * -1;
+      this.text.rotate.y = this.illo.rotate.y * -1;
+      this.text.rotate.z = this.illo.rotate.z * -1;
+
+      console.log(this.illo.rotate);
+    }
     // animate next frame
     requestAnimationFrame(this.animate.bind(this));
   }

@@ -33,7 +33,7 @@
     position: absolute;
     width: 100vw;
     height: 100vh;
-    transform: translateY(200%);
+    /* transform: translateY(200%); */
 
     transition: transform 0.8s ease;
   }
