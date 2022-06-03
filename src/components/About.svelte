@@ -26,7 +26,7 @@
     </p>
     <p>
       You mint an NFT using Manifold, that serves as an interface to play
-      Tetris, written Rust and completing to WASM. We use IPFS, allowing us to
+      Tetris, written in Rust and compiling to WASM. We use IPFS, allowing us to
       store the NFT asset data in a decentralised and reliable fashion, fit for
       off-chain NFT data, the metadata, images, and the game itself.
     </p>
