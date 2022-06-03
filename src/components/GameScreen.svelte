@@ -3,6 +3,14 @@
   import appState from "src/stores/appState";
   import Iframe from "./Iframe.svelte";
   import Controls from "./Controls.svelte";
+
+  let openseaBaseURL = import.meta.env.VITE_ENV === "testnet"
+    ? `https://testnets.opensea.io`
+    : `https://opensea.io`;
+
+  let openseaLink = `${openseaBaseURL}/assets/${
+    import.meta.env.VITE_DETRIS_CONTRACT
+  }`;  
 </script>
 
 <div class="wrapper">
@@ -30,13 +38,18 @@
         <span> Play on IPFS </span>
         <ExternalLinkIcon size="20" />
       </a>
+      <a
+        class="link"
+        href={`${openseaLink}/${$appState.tokenId}`}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <span> Play on Opensea </span>
+        <ExternalLinkIcon size="20" />
+      </a>
     </section>
   </div>
-  <div class="info-panel">
-    {#if $appState.state === "finished"}
-      <p style="color: #fff">Game ended, mint the endgame</p>
-    {/if}
-  </div>
+  <div class="info-panel" />
 </div>
 
 <style>

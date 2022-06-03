@@ -1,5 +1,9 @@
 <script>
-  import { ArrowLeftCircleIcon } from "svelte-feather-icons";
+  import {
+    ArrowLeftCircleIcon,
+    ExternalLinkIcon,
+    TwitterIcon,
+  } from "svelte-feather-icons";
   import { link } from "svelte-navigator";
 </script>
 
@@ -13,6 +17,26 @@
   <h1>About Detris</h1>
   <div class="body">
     <p>We Finiam. Finiam good.</p>
+
+    <a
+      class="link"
+      href="https://finiam.com"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <ExternalLinkIcon size="20" />
+      <span> finiam.com </span>
+    </a>
+
+    <a
+      class="link"
+      href="https://twitter.com/wearefiniam"
+      target="_blank"
+      rel="noreferrer noopener"
+    >
+      <TwitterIcon size="20" />
+      <span> wearefiniam </span>
+    </a>
   </div>
 </div>
 
@@ -39,5 +63,22 @@
   }
   .back-btn span {
     margin-left: 10px;
+  }
+  .link {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    font-family: var(--sans-font);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: white;
+  }
+  .link span {
+    margin-left: 10px;
+  }
+  .link:first-of-type {
+    margin-top: 40px;
   }
 </style>

@@ -7,7 +7,7 @@
     if ($walletStore.balance) {
       appState.setState("playing");
     } else {
-      appState.handleMint();
+      appState.handleMint($walletStore.userAddress);
     }
   }
 </script>

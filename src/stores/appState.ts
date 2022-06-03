@@ -1,6 +1,6 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import contractStore from "./contract";
-import walletStore from "./wallet";
+import { getTokenSupply, getTokenByOwner } from "src/lib/api";
 
 type GameState = "home" | "minting" | "playing" | "finished";
 
@@ -9,6 +9,7 @@ interface AppState {
   tokenId: number;
   tokenURI: string;
   iframeSrc: string;
+  supply: number;
 }
 
 function createAppState() {
@@ -17,14 +18,30 @@ function createAppState() {
     tokenId: null,
     tokenURI: null,
     iframeSrc: null,
+    supply: 101,
   });
 
   const { subscribe, update } = store;
 
-  async function getTokendata() {
+  async function getSupply() {
+    const supply = await getTokenSupply();
+
+    update((store) => ({
+      ...store,
+      supply,
+    }));
+  }
+
+  async function getTokendata(address: string) {
     try {
-      const tokenId = await contractStore.getTokenId();
+      const tokenId = await getTokenByOwner(address);
+
+      if (tokenId === false) {
+        return;
+      }
+
       const tokenURI = await contractStore.getTokenURI(tokenId);
+
       const iframeSrc = await getAnimationURL(tokenURI);
 
       update((store) => ({
@@ -55,12 +72,12 @@ function createAppState() {
     }));
   }
 
-  async function handleMint() {
+  async function handleMint(address: string) {
     try {
       appState.setState("minting");
       await contractStore.mint();
 
-      await appState.getTokendata();
+      await appState.getTokendata(address);
 
       appState.setState("playing");
     } catch {
@@ -70,12 +87,16 @@ function createAppState() {
 
   return {
     subscribe,
+    getSupply,
     getTokendata,
     setState,
     handleMint,
+    tokenId: get(store).tokenId,
   };
 }
 
 const appState = createAppState();
+
+appState.getSupply();
 
 export default appState;

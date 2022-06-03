@@ -24,7 +24,7 @@ function createWalletStore() {
     chainOk: true,
   });
 
-  const { subscribe, set, update } = store;
+  const { subscribe, update } = store;
 
   function setLoading(loading: boolean) {
     update((store) => ({
@@ -54,7 +54,7 @@ function createWalletStore() {
 
     await updateBalance();
 
-    await appState.getTokendata();
+    await appState.getTokendata(data.userAddress);
 
     setLoading(false);
   }

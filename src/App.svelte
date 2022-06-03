@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Router, Route, Link } from "svelte-navigator";
+  import { Router, Route } from "svelte-navigator";
   import GameScreen from "src/components/GameScreen.svelte";
   import HomeScreen from "src/components/HomeScreen.svelte";
   import appState from "src/stores/appState";
