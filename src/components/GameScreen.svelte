@@ -4,7 +4,7 @@
   import Iframe from "./Iframe.svelte";
   import Controls from "./Controls.svelte";
 
-  let openseaBaseURL = import.meta.env.VITE_ENV
+  let openseaBaseURL = import.meta.env.VITE_ENV === "testnet"
     ? `https://testnets.opensea.io`
     : `https://opensea.io`;
 
