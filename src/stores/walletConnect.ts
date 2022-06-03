@@ -1,19 +1,30 @@
-import { providers, Signer } from "ethers";
+import { providers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import walletStore from "./wallet";
+
+function getConnectConfig() {
+  if (import.meta.env.ENV === "testnet") {
+    return {
+      4: import.meta.env.VITE_INFURA_ENDPOINT,
+    };
+  }
+
+  return {
+    1: import.meta.env.VITE_INFURA_ENDPOINT,
+  };
+}
 
 function createWalletConnectStore() {
   async function connect() {
     //  Create WalletConnect Provider
     const web3Provider = new WalletConnectProvider({
-      rpc: {
-        69: "https://kovan.optimism.io",
-      },
+      rpc: getConnectConfig(),
+      infuraId: import.meta.env.VITE_INFURA_PROJECT_ID,
     });
 
     web3Provider.enable();
 
-    web3Provider.updateRpcUrl(69);
+    web3Provider.updateRpcUrl(4);
 
     setupEventListeners(web3Provider);
 

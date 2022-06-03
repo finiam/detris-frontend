@@ -60,10 +60,13 @@ function createWalletStore() {
   }
 
   async function checkChain(provider: providers.Web3Provider) {
+    const chainId =
+      provider?.network?.chainId || (provider?.provider as any)?.chainId;
+
     update((store) => ({
       ...store,
-      chain: provider.network.chainId,
-      chainOk: getCorrectChainId() === provider.network.chainId,
+      chain: chainId,
+      chainOk: getCorrectChainId() === chainId,
     }));
   }
 
@@ -97,7 +100,9 @@ function createWalletStore() {
   function handleChainChange(chainId: number) {
     console.log("chainChanged", chainId);
 
-    const chainIdAsNumber = BigNumber.from(chainId).toNumber();
+    const chainIdAsNumber = isNaN(chainId)
+      ? BigNumber.from(chainId).toNumber()
+      : chainId;
 
     update((store) => ({
       ...store,
