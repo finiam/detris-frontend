@@ -54,7 +54,7 @@ function createWalletStore() {
 
     await updateBalance();
 
-    await appState.getTokendata();
+    await appState.getTokendata(await data.signer.getAddress());
 
     setLoading(false);
   }

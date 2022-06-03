@@ -4,6 +4,7 @@
   import GameScreen from "src/components/GameScreen.svelte";
   import HomeScreen from "src/components/HomeScreen.svelte";
   import appState from "src/stores/appState";
+
   import ChainWarning from "./components/ChainWarning.svelte";
   import setFavicon from "./lib/setFavicon";
   import { addMessageListener } from "./lib/messageUtils";
