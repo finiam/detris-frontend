@@ -8,7 +8,7 @@ const DETRIS_ABI = [
 ];
 
 const EXTENSION_ABI = [
-  "function mint(bytes32[] calldata merkleProof) external payable",
+  "function mint() external payable",
   "function getMintedTokensAmount() external view returns (uint256)",
 ];
 
@@ -71,14 +71,13 @@ function buildContractsStore() {
   async function mint() {
     const { extensionContract } = get(store);
 
-    const merkleProof = ethers.utils.formatBytes32String("");
     const payableAmount = ethers.utils.parseEther("0").toString();
 
-    let tx = (await extensionContract.mint([merkleProof], {
+    let tx = (await extensionContract.mint({
       value: payableAmount,
     })) as ethers.providers.TransactionResponse;
 
-    await tx.wait();
+    await tx.wait(2);
   }
 
   return {

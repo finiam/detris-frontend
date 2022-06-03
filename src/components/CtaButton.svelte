@@ -4,7 +4,7 @@
   import FancyLoader from "./FancyLoader.svelte";
 
   async function handleClick() {
-    if ($walletStore.balance) {
+    if ($appState.tokenId) {
       appState.setState("playing");
     } else {
       appState.handleMint($walletStore.userAddress);
@@ -21,11 +21,11 @@
     on:click={handleClick}
     disabled={$walletStore.loading}
   >
-    {#if $walletStore.connected && !$walletStore.balance}
+    {#if $walletStore.connected && !$appState.tokenId}
       MINT TO PLAY
     {/if}
 
-    {#if $walletStore.connected && $walletStore.balance}
+    {#if $walletStore.connected && $appState.tokenId}
       PLAY YOUR NFT
     {/if}
   </button>

@@ -37,9 +37,13 @@ async function getTokenByOwner(address: string) {
         }
       `,
       {
-        address,
+        address: address.toLowerCase(),
       }
     );
+
+    if (assets?.length === 0) {
+      return false;
+    }
 
     return assets?.[0].tokenId || false;
   } catch (err) {

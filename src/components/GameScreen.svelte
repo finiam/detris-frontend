@@ -3,14 +3,16 @@
   import appState from "src/stores/appState";
   import Iframe from "./Iframe.svelte";
   import Controls from "./Controls.svelte";
+  import { link } from "svelte-navigator";
 
-  let openseaBaseURL = import.meta.env.VITE_ENV === "testnet"
-    ? `https://testnets.opensea.io`
-    : `https://opensea.io`;
+  let openseaBaseURL =
+    import.meta.env.VITE_ENV === "testnet"
+      ? `https://testnets.opensea.io`
+      : `https://opensea.io`;
 
   let openseaLink = `${openseaBaseURL}/assets/${
     import.meta.env.VITE_DETRIS_CONTRACT
-  }`;  
+  }`;
 </script>
 
 <div class="wrapper">
@@ -49,7 +51,9 @@
       </a>
     </section>
   </div>
-  <div class="info-panel" />
+  <div class="info-panel">
+    <a class="link" href="/about" use:link>About</a>
+  </div>
 </div>
 
 <style>
