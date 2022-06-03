@@ -9,7 +9,7 @@ interface AppState {
   tokenId: number;
   tokenURI: string;
   iframeSrc: string;
-  supply: number;
+  minted: number;
 }
 
 function createAppState() {
@@ -18,17 +18,17 @@ function createAppState() {
     tokenId: null,
     tokenURI: null,
     iframeSrc: null,
-    supply: 101,
+    minted: 0,
   });
 
   const { subscribe, update } = store;
 
   async function getSupply() {
-    const supply = await getTokenSupply();
+    const minted = await getTokenSupply();
 
     update((store) => ({
       ...store,
-      supply,
+      minted,
     }));
   }
 

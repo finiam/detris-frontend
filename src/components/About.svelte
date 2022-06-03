@@ -1,4 +1,6 @@
 <script>
+  import appState from "src/stores/appState";
+
   import {
     ArrowLeftCircleIcon,
     ExternalLinkIcon,
@@ -16,6 +18,22 @@
   </nav>
   <h1>About Detris</h1>
   <div class="body">
+    <p>{$appState.minted} NFTs minted so far</p>
+    <p>
+      Detris is a playable NFT, powered by finiam. We came up with the concept
+      for ETH Amsterdam, as a way to explore what an NFT could be, and ended up
+      being one of the 13 finalist teams.
+    </p>
+    <p>
+      You mint an NFT using Manifold, that serves as an interface to play
+      Tetris, written in Rust and compiling to WASM. We use IPFS, allowing us to
+      store the NFT asset data in a decentralised and reliable fashion, fit for
+      off-chain NFT data, the metadata, images, and the game itself.
+    </p>
+    <p>
+      This is the first phase of the project, next we'll be exploring on-chain
+      NFT generation soon and expect to launch a second phase with some news!
+    </p>
     <p>We Finiam. Finiam good.</p>
 
     <a
