@@ -44,8 +44,8 @@ function createWalletStore() {
       return;
     }
 
-    await contractStore.buildContracts(data.signer);    
-    
+    await contractStore.buildContracts(data.signer);
+
     update((store) => ({
       ...store,
       ...data,
@@ -155,7 +155,7 @@ function createWalletStore() {
     setLoading,
     handleAccountChange,
     handleChainChange,
-    handleProviderDisconnect,    
+    handleProviderDisconnect,
   };
 }
 

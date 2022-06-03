@@ -1,7 +1,6 @@
 import { get, writable } from "svelte/store";
 import contractStore from "./contract";
 import { getTokenSupply, getTokenByOwner } from "src/lib/api";
-import walletStore from "./wallet";
 
 type GameState = "home" | "minting" | "playing" | "finished";
 
@@ -33,7 +32,7 @@ function createAppState() {
     }));
   }
 
-  async function getTokendata(address: string) {    
+  async function getTokendata(address: string) {
     try {
       const tokenId = await getTokenByOwner(address);
 

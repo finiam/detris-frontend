@@ -47,7 +47,7 @@ export default defineConfig({
       src: path.resolve("/src"),
     },
   },
-  optimizeDeps: {    
+  optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {
