@@ -34,19 +34,19 @@ function createAppState() {
 
   async function getTokendata(address: string) {
     try {
-      const tokenId = await getTokenByOwner(address);
+      const id = await getTokenByOwner(address);
 
-      if (tokenId === false) {
+      if (id === false) {
         return;
       }
 
-      const tokenURI = await contractStore.getTokenURI(tokenId);
+      const tokenURI = await contractStore.getTokenURI(id);    
 
       const iframeSrc = await getAnimationURL(tokenURI);
 
       update((store) => ({
         ...store,
-        tokenId,
+        tokenId: id,
         tokenURI,
         iframeSrc,
       }));

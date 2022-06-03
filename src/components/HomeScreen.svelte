@@ -19,7 +19,7 @@
   <p class="subtitle">Playable NFT (no really, the NFT itself is a game)</p>
 
   {#if $walletStore.userAddress}
-    <p class="name">Hi, {$walletStore.userAddress.substring(0, 20)}</p>
+    <p class="name">Hi, {$walletStore.userAddress.substring(0, 15)}</p>
   {/if}
 
   {#if $walletStore.userAddress}
@@ -84,6 +84,7 @@
   .name {
     color: #fff;
     margin: 20px 0;
+    text-align: center;
   }
   @keyframes glow {
     0% {
