@@ -13,11 +13,8 @@ async function getTokenSupply() {
         }
       `
     );
-
-    const supply =
-      Number(detrises[0].maxSupply) - Number(detrises[0].currentSupply);
-
-    return supply;
+    
+    return Number(detrises[0].currentSupply);
   } catch (err) {
     console.log(err);
 

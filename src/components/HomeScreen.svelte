@@ -6,6 +6,7 @@
   import BlockShapes from "./BlockShapes.svelte";
   import HomeScreenBg from "./HomeScreenBg.svelte";
   import { link } from "svelte-navigator";
+import SoldOut from "./SoldOut.svelte";
 
   $: minting = $appState.state === "minting";
 </script>
@@ -22,7 +23,9 @@
     <p class="name">Hi, {$walletStore.userAddress.substring(0, 15)}</p>
   {/if}
 
-  {#if $walletStore.userAddress}
+  {#if $appState.minted === 101}
+    <SoldOut />
+  {:else if $walletStore.userAddress}
     <CtaButton />
   {:else}
     <Connect />
