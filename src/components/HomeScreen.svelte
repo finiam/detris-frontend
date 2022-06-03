@@ -6,7 +6,7 @@
   import BlockShapes from "./BlockShapes.svelte";
   import HomeScreenBg from "./HomeScreenBg.svelte";
   import { link } from "svelte-navigator";
-import SoldOut from "./SoldOut.svelte";
+  import SoldOut from "./SoldOut.svelte";
 
   $: minting = $appState.state === "minting";
 </script>

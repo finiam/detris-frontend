@@ -18,7 +18,7 @@
   </nav>
   <h1>About Detris</h1>
   <div class="body">
-    <p>{$appState.minted} minted so far</p>
+    <p>{$appState.minted} NFTs minted so far</p>
     <p>
       Detris is a playable NFT, powered by finiam. We came up with the concept
       for ETH Amsterdam, as a way to explore what an NFT could be, and ended up
