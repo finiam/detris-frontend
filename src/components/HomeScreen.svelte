@@ -20,9 +20,9 @@
 
   {#if $walletStore.userAddress}
     <p class="name">Hi, {$walletStore.userAddress.substring(0, 20)}</p>
-  {/if}
+  {/if}  
 
-  {#if $walletStore.connected}
+  {#if $walletStore.userAddress}
     <CtaButton />
   {:else}
     <Connect />

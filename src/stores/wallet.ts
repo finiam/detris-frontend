@@ -24,7 +24,7 @@ function createWalletStore() {
     chainOk: true,
   });
 
-  const { subscribe, set, update } = store;
+  const { subscribe, update } = store;
 
   function setLoading(loading: boolean) {
     update((store) => ({
@@ -44,8 +44,8 @@ function createWalletStore() {
       return;
     }
 
-    await contractStore.buildContracts(data.signer);
-
+    await contractStore.buildContracts(data.signer);    
+    
     update((store) => ({
       ...store,
       ...data,
@@ -54,7 +54,7 @@ function createWalletStore() {
 
     await updateBalance();
 
-    await appState.getTokendata(await data.signer.getAddress());
+    await appState.getTokendata(data.userAddress);
 
     setLoading(false);
   }
@@ -155,7 +155,7 @@ function createWalletStore() {
     setLoading,
     handleAccountChange,
     handleChainChange,
-    handleProviderDisconnect,
+    handleProviderDisconnect,    
   };
 }
 

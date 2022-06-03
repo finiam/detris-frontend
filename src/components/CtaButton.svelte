@@ -5,9 +5,9 @@
 
   async function handleClick() {
     if ($walletStore.balance) {
-      appState.setState("playing");
+      appState.setState("playing");      
     } else {
-      appState.handleMint();
+      appState.handleMint($walletStore.userAddress);
     }
   }
 </script>
